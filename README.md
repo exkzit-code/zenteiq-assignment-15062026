@@ -73,13 +73,21 @@ MaxText's logged parameter count remains the final source of truth.
 
 Use a fresh Colab runtime for each backend because CPU, GPU, and TPU installs can require different dependencies.
 
-1. Open `notebooks/zenteiq_maxtext_runner.ipynb` in Colab.
-2. Set `BACKEND` to one of `cpu`, `gpu`, or `tpu`.
-3. Match the Colab runtime type to that backend.
-4. Run the setup cell.
-5. Run the training cell.
-6. Run the parsing cell.
-7. Commit the generated logs and tables.
+Recommended path:
+
+1. Create a public GitHub repo.
+2. Push this repository to it.
+3. In Colab, choose **File > Open notebook > GitHub**.
+4. Paste the GitHub repo URL and open `notebooks/zenteiq_maxtext_runner.ipynb`.
+5. In the first notebook cell, set:
+   - `BACKEND = "cpu"`, `"gpu"`, or `"tpu"`
+   - `REPO_URL = "https://github.com/<your-user>/<your-repo>.git"`
+6. Match the Colab runtime type to `BACKEND`.
+7. Run all cells.
+8. Repeat in fresh Colab runtimes for the other two backends.
+9. Commit the generated logs and tables back to the repo.
+
+You can upload only the notebook to Colab, but the notebook still needs the rest of this repo. Set `REPO_URL` in the first cell so it can clone the scripts and configs.
 
 Equivalent terminal commands inside Colab:
 
