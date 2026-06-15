@@ -21,6 +21,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MATRIX = REPO_ROOT / "configs" / "runs.json"
 DEFAULT_LOG_DIR = REPO_ROOT / "results" / "raw_logs"
 DEFAULT_COMMAND_LOG = REPO_ROOT / "results" / "metrics" / "run_commands.jsonl"
+LOG_TAIL_LINES = 80
 
 
 def load_matrix(path: Path) -> dict[str, Any]:
@@ -111,6 +112,15 @@ def run_command(command: list[str], log_path: Path, env: dict[str, str], dry_run
         return process.wait()
 
 
+def print_log_tail(log_path: Path) -> None:
+    if not log_path.exists():
+        return
+    lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()
+    print(f"\n--- tail: {log_path} ---", file=sys.stderr)
+    for line in lines[-LOG_TAIL_LINES:]:
+        print(line, file=sys.stderr)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--matrix", type=Path, default=DEFAULT_MATRIX)
@@ -156,6 +166,7 @@ def main() -> int:
         return_code = run_command(command, log_path, env, args.dry_run)
         if return_code != 0:
             failures.append(run["run_id"])
+            print_log_tail(log_path)
             print(f"Run failed with exit code {return_code}: {run['run_id']}", file=sys.stderr)
             if not args.continue_on_error:
                 return return_code
