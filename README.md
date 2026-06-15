@@ -51,3 +51,53 @@ For each run, keep:
 
 The raw logs are the source of truth. Tables are derived from them.
 
+## Local Planning Checks
+
+Before running Colab, check the planned parameter sizes:
+
+```bash
+python3 scripts/estimate_params.py
+```
+
+Expected planning estimates:
+
+| Model | Architecture | Estimated total | Estimated active |
+| --- | --- | ---: | ---: |
+| Qwen3 0.6B base | dense | ~596M | ~596M |
+| Qwen3 scaled approximately 1B | dense | ~981M | ~981M |
+| DeepSeek MoE scaled under 1B | moe | ~478M | ~336M |
+
+MaxText's logged parameter count remains the final source of truth.
+
+## Colab Execution
+
+Use a fresh Colab runtime for each backend because CPU, GPU, and TPU installs can require different dependencies.
+
+1. Open `notebooks/zenteiq_maxtext_runner.ipynb` in Colab.
+2. Set `BACKEND` to one of `cpu`, `gpu`, or `tpu`.
+3. Match the Colab runtime type to that backend.
+4. Run the setup cell.
+5. Run the training cell.
+6. Run the parsing cell.
+7. Commit the generated logs and tables.
+
+Equivalent terminal commands inside Colab:
+
+```bash
+bash scripts/install_maxtext_colab.sh gpu
+python3 scripts/run_maxtext_colab.py --backend gpu
+python3 scripts/parse_maxtext_logs.py
+```
+
+Repeat with `cpu` and `tpu`.
+
+## After All Runs
+
+Update `docs/final_analysis.md` using:
+
+- `results/metrics/run_summary.md`
+- `results/metrics/run_summary.csv`
+- `results/metrics/step_metrics.csv`
+- raw logs under `results/raw_logs/`
+
+Then commit the completed results and analysis.
