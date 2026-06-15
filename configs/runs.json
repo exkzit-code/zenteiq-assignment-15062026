@@ -18,6 +18,7 @@
     "attention": "dot_product",
     "remat_policy": "full",
     "scan_layers": true,
+    "skip_jax_distributed_system": true,
     "base_output_directory": "/content/zenteiq_maxtext_outputs"
   },
   "models": {
@@ -121,4 +122,3 @@
     }
   ]
 }
-
