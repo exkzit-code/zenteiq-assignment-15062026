@@ -25,7 +25,5 @@ case "${backend}" in
     ;;
 esac
 
-python3 -c "import maxtext; print('MaxText import OK')"
-python3 -m maxtext.trainers.pre_train.train --help >/dev/null
+python3 -c "import maxtext; import maxtext.trainers.pre_train.train; print('MaxText import OK')"
 echo "MaxText ${version} setup complete for ${backend}."
-

@@ -72,8 +72,7 @@ def run_env(backend: str, platform_env: str) -> dict[str, str]:
     env.setdefault("DECOUPLE_GCLOUD", "TRUE")
 
     if platform_env == "auto":
-        if backend == "cpu":
-            env["JAX_PLATFORMS"] = "cpu"
+        env["JAX_PLATFORMS"] = backend
     elif platform_env != "none":
         env["JAX_PLATFORMS"] = platform_env
 
@@ -139,19 +138,20 @@ def main() -> int:
         log_path = args.log_dir / f"{run['run_id']}.log"
         env = run_env(run["backend"], args.platform_env)
 
-        append_command_record(
-            args.command_log,
-            {
-                "run_id": run["run_id"],
-                "backend": run["backend"],
-                "model_key": run["model_key"],
-                "started_at_utc": started_at,
-                "command": command,
-                "jax_platforms": env.get("JAX_PLATFORMS", ""),
-                "decouple_gcloud": env.get("DECOUPLE_GCLOUD", ""),
-                "dry_run": args.dry_run,
-            },
-        )
+        if not args.dry_run:
+            append_command_record(
+                args.command_log,
+                {
+                    "run_id": run["run_id"],
+                    "backend": run["backend"],
+                    "model_key": run["model_key"],
+                    "started_at_utc": started_at,
+                    "command": command,
+                    "jax_platforms": env.get("JAX_PLATFORMS", ""),
+                    "decouple_gcloud": env.get("DECOUPLE_GCLOUD", ""),
+                    "dry_run": args.dry_run,
+                },
+            )
 
         return_code = run_command(command, log_path, env, args.dry_run)
         if return_code != 0:
@@ -168,4 +168,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
