@@ -81,6 +81,30 @@ def run_env(backend: str, platform_env: str) -> dict[str, str]:
     return env
 
 
+def backend_is_available(backend: str, env: dict[str, str]) -> bool:
+    if backend not in {"gpu", "tpu"}:
+        return True
+
+    probe = subprocess.run(
+        [sys.executable, "-c", "import jax; print({d.platform for d in jax.devices()})"],
+        env=env,
+        capture_output=True,
+        text=True,
+    )
+    if probe.returncode == 0 and backend in probe.stdout:
+        return True
+
+    runtime = "TPU" if backend == "tpu" else "GPU"
+    print(
+        f"BACKEND={backend!r}, but JAX cannot see a {runtime} device. "
+        f"In Colab, use Runtime > Change runtime type > {runtime}, reconnect, then rerun from the first cell.",
+        file=sys.stderr,
+    )
+    if probe.stderr:
+        print(probe.stderr.strip().splitlines()[-1], file=sys.stderr)
+    return False
+
+
 def append_command_record(path: Path, record: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8") as f:
@@ -148,6 +172,11 @@ def main() -> int:
         command = build_command(matrix, run, args.base_output_directory)
         log_path = args.log_dir / f"{run['run_id']}.log"
         env = run_env(run["backend"], args.platform_env)
+        if not args.dry_run and not backend_is_available(run["backend"], env):
+            failures.append(run["run_id"])
+            if not args.continue_on_error:
+                return 1
+            continue
 
         if not args.dry_run:
             append_command_record(
