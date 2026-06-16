@@ -25,6 +25,7 @@ case "${backend}" in
   tpu)
     uv pip install --system "maxtext[tpu]==${version}" --resolution=lowest
     install_tpu_pre_train_extra_deps || true
+    python3 scripts/patch_maxtext_tpu_colab.py
     ;;
 esac
 
