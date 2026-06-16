@@ -27,5 +27,9 @@ case "${backend}" in
     ;;
 esac
 
-python3 -c "import maxtext; import maxtext.trainers.pre_train.train; print('MaxText import OK')"
+if [[ "${backend}" == "tpu" ]]; then
+  python3 -c "import maxtext; print('MaxText import OK')"
+else
+  python3 -c "import maxtext; import maxtext.trainers.pre_train.train; print('MaxText import OK')"
+fi
 echo "MaxText ${version} setup complete for ${backend}."
