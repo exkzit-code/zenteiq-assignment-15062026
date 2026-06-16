@@ -15,6 +15,8 @@ case "${backend}" in
   gpu)
     uv pip install --system "maxtext[cuda12]==${version}" --resolution=lowest
     install_cuda12_pre_train_extra_deps || true
+    # ponytail: Colab's cuDNN can mismatch optional Transformer Engine; drop TE unless FP8 runs need it.
+    python3 -m pip uninstall -y -q transformer-engine transformer-engine-cu12 transformer-engine-jax || true
     ;;
   cpu)
     uv pip install --system "maxtext[tpu]==${version}" --resolution=lowest
