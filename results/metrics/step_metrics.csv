@@ -99,6 +99,56 @@ dense_qwen_0_6b_gpu,gpu,dense,qwen3_0_6b,Qwen3 0.6B base,46,0.023,4.924,1372.86,
 dense_qwen_0_6b_gpu,gpu,dense,qwen3_0_6b,Qwen3 0.6B base,47,0.023,4.926,1373.273,32.0,0.0,0.0,1.0,
 dense_qwen_0_6b_gpu,gpu,dense,qwen3_0_6b,Qwen3 0.6B base,48,0.023,4.915,1370.156,32.0,0.0,0.0,1.0,
 dense_qwen_0_6b_gpu,gpu,dense,qwen3_0_6b,Qwen3 0.6B base,49,0.023,4.952,1380.56,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,0,3.507,0.033,9.125,32.0,187.866,187.866,inf,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,1,0.267,0.429,119.683,32.0,187.866,187.866,inf,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,2,0.003,38.453,10720.268,32.0,181.544,181.544,inf,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,3,0.013,8.99,2506.266,32.0,161.145,161.145,inf,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,4,0.014,8.307,2315.82,32.0,123.59,123.59,inf,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,5,0.014,8.085,2254.156,32.0,98.621,98.621,inf,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,6,0.014,7.931,2211.166,32.0,76.115,76.115,1.139041319031881e+33,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,7,0.014,8.271,2305.808,32.0,55.792,55.792,1.6985318068292481e+24,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,8,0.014,8.378,2335.596,32.0,35.496,35.496,2605634251915264.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,9,0.014,8.458,2357.969,32.0,21.057,21.057,1396604416.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,10,0.014,8.395,2340.55,32.0,9.312,9.312,11073.246,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,11,0.014,8.254,2301.165,32.0,2.488,2.488,12.035,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,12,0.014,8.293,2312.139,32.0,0.002,0.002,1.002,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,13,0.014,8.422,2347.935,32.0,0.001,0.001,1.001,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,14,0.014,8.149,2271.759,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,15,0.014,8.019,2235.73,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,16,0.013,8.65,2411.636,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,17,0.013,8.575,2390.557,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,18,0.014,8.376,2335.085,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,19,0.014,8.197,2285.388,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,20,0.014,8.331,2322.543,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,21,0.014,8.189,2282.942,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,22,0.014,8.5,2369.844,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,23,0.014,8.297,2313.142,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,24,0.014,8.149,2271.759,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,25,0.014,8.389,2338.668,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,26,0.014,8.278,2307.97,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,27,0.014,8.494,2367.915,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,28,0.014,8.353,2328.628,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,29,0.014,8.101,2258.452,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,30,0.014,8.387,2338.156,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,31,0.014,8.282,2308.969,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,32,0.014,8.446,2354.673,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,33,0.014,8.21,2288.821,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,34,0.014,8.333,2323.049,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,35,0.014,8.445,2354.326,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,36,0.014,8.203,2287.021,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,37,0.014,8.419,2347.073,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,38,0.014,8.359,2330.323,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,39,0.014,8.286,2309.969,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,40,0.013,8.568,2388.594,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,41,0.014,8.111,2261.324,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,42,0.014,8.46,2358.491,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,43,0.014,8.35,2327.781,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,44,0.014,8.287,2310.469,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,45,0.014,8.198,2285.551,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,46,0.014,8.325,2321.027,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,47,0.014,8.279,2308.136,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,48,0.014,8.285,2309.802,32.0,0.0,0.0,1.0,
+dense_qwen_0_6b_tpu,tpu,dense,qwen3_0_6b,Qwen3 0.6B base,49,0.014,8.3,2313.978,32.0,0.0,0.0,1.0,
 dense_qwen_scaled_1b_cpu,cpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,0,6.588,0.029,4.857,32.0,246.511,246.511,inf,
 dense_qwen_scaled_1b_cpu,cpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,1,1.183,0.16,27.047,32.0,246.511,246.511,inf,
 dense_qwen_scaled_1b_cpu,cpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,2,11.094,0.017,2.884,32.0,235.771,235.771,inf,
@@ -199,6 +249,56 @@ dense_qwen_scaled_1b_gpu,gpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B
 dense_qwen_scaled_1b_gpu,gpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,47,0.033,5.718,969.022,32.0,0.0,0.0,1.0,
 dense_qwen_scaled_1b_gpu,gpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,48,0.033,5.701,966.067,32.0,0.0,0.0,1.0,
 dense_qwen_scaled_1b_gpu,gpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,49,0.033,5.728,970.638,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,0,4.929,0.038,6.492,32.0,240.116,240.116,inf,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,1,0.267,0.708,119.904,32.0,240.116,240.116,inf,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,2,0.003,56.845,9632.751,32.0,224.463,224.463,inf,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,3,0.024,7.961,1349.073,32.0,172.264,172.264,inf,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,4,0.025,7.649,1296.229,32.0,140.9,140.9,inf,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,5,0.024,7.824,1325.875,32.0,122.168,122.168,inf,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,6,0.024,7.755,1314.222,32.0,100.208,100.208,inf,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,7,0.024,7.748,1313.036,32.0,78.19,78.19,9.063022781520292e+33,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,8,0.024,7.831,1327.085,32.0,54.394,54.394,4.198233955356565e+23,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,9,0.024,7.869,1333.5,32.0,31.645,31.645,55382785392640.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,10,0.024,7.79,1320.132,32.0,16.102,16.102,9838502.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,11,0.024,7.716,1307.563,32.0,6.103,6.103,447.058,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,12,0.024,7.781,1318.555,32.0,1.251,1.251,3.495,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,13,0.024,7.728,1309.49,32.0,1.032,1.032,2.806,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,14,0.024,7.773,1317.198,32.0,0.048,0.048,1.049,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,15,0.024,7.833,1327.305,32.0,0.002,0.002,1.002,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,16,0.024,7.779,1318.174,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,17,0.024,7.786,1319.479,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,18,0.025,7.66,1298.016,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,19,0.024,7.815,1324.229,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,20,0.024,7.764,1315.681,32.0,0.004,0.004,1.004,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,21,0.024,7.817,1324.723,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,22,0.024,7.713,1306.976,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,23,0.024,7.721,1308.365,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,24,0.024,7.754,1314.006,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,25,0.025,7.698,1304.419,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,26,0.024,7.798,1321.44,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,27,0.024,7.759,1314.762,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,28,0.024,7.812,1323.791,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,29,0.024,7.772,1316.981,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,30,0.024,7.743,1312.067,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,31,0.024,7.82,1325.107,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,32,0.024,7.884,1335.95,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,33,0.024,7.866,1332.945,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,34,0.024,7.728,1309.65,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,35,0.024,7.911,1340.595,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,36,0.025,7.631,1293.191,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,37,0.024,7.892,1337.401,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,38,0.024,7.835,1327.636,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,39,0.025,7.58,1284.47,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,40,0.025,7.541,1277.853,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,41,0.024,7.824,1325.875,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,42,0.024,7.842,1328.848,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,43,0.024,7.8,1321.713,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,44,0.024,7.717,1307.777,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,45,0.025,7.696,1304.1,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,46,0.024,7.815,1324.394,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,47,0.024,7.728,1309.65,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,48,0.024,7.881,1335.504,32.0,0.0,0.0,1.0,
+dense_qwen_scaled_1b_tpu,tpu,dense,qwen3_scaled_1b,Qwen3 scaled approximately 1B,49,0.025,7.619,1291.051,32.0,0.0,0.0,1.0,
 moe_deepseek_under_1b_cpu,cpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,0,10.465,0.004,3.058,32.0,11.927,11.927,151333.078,0.0
 moe_deepseek_under_1b_cpu,cpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,1,0.806,0.055,39.714,32.0,11.927,11.927,151333.078,0.0
 moe_deepseek_under_1b_cpu,cpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,2,3.997,0.011,8.006,32.0,11.875,11.875,143627.312,0.0
@@ -299,3 +399,53 @@ moe_deepseek_under_1b_gpu,gpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled unde
 moe_deepseek_under_1b_gpu,gpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,47,0.015,2.977,2143.479,32.0,0.267,0.267,1.306,0.0
 moe_deepseek_under_1b_gpu,gpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,48,0.015,2.927,2107.065,32.0,0.265,0.265,1.303,0.0
 moe_deepseek_under_1b_gpu,gpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,49,0.015,2.969,2137.466,32.0,0.262,0.262,1.299,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,0,6.129,0.007,5.221,32.0,12.132,12.132,185759.016,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,1,0.285,0.156,112.45,32.0,12.132,12.132,185759.016,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,2,0.003,13.478,9702.85,32.0,12.086,12.086,177350.641,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,3,0.01,4.431,3190.111,32.0,11.894,11.894,146422.391,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,4,0.01,4.43,3189.157,32.0,11.289,11.289,79906.227,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,5,0.01,4.382,3154.885,32.0,10.573,10.573,39071.008,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,6,0.01,4.368,3144.345,32.0,9.851,9.851,18974.746,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,7,0.01,4.414,3177.756,32.0,9.172,9.172,9621.188,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,8,0.01,4.371,3146.509,32.0,8.532,8.532,5076.391,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,9,0.01,4.371,3146.509,32.0,7.924,7.924,2761.898,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,10,0.01,4.388,3158.934,32.0,7.33,7.33,1525.593,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,11,0.01,4.362,3140.334,32.0,6.744,6.744,849.36,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,12,0.01,4.337,3122.256,32.0,6.182,6.182,483.826,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,13,0.01,4.348,3130.197,32.0,5.635,5.635,280.158,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,14,0.01,4.431,3190.111,32.0,5.099,5.099,163.89,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,15,0.01,4.402,3168.944,32.0,4.589,4.589,98.398,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,16,0.01,4.378,3152.088,32.0,4.106,4.106,60.694,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,17,0.01,4.367,3143.727,32.0,3.658,3.658,38.769,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,18,0.01,4.385,3156.752,32.0,3.226,3.226,25.169,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,19,0.01,4.371,3146.819,32.0,2.828,2.828,16.911,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,20,0.01,4.366,3143.11,32.0,2.464,2.464,11.75,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,21,0.01,4.334,3119.821,32.0,2.141,2.141,8.504,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,22,0.01,4.443,3198.721,32.0,1.85,1.85,6.358,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,23,0.01,4.378,3151.778,32.0,1.589,1.589,4.896,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,24,0.01,4.391,3161.118,32.0,1.364,1.364,3.91,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,25,0.01,4.334,3119.821,32.0,1.156,1.156,3.178,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,26,0.01,4.382,3154.574,32.0,0.983,0.983,2.673,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,27,0.01,4.368,3144.963,32.0,0.833,0.833,2.301,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,28,0.01,4.405,3171.457,32.0,0.714,0.714,2.043,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,29,0.011,3.964,2853.83,32.0,0.622,0.622,1.863,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,30,0.009,4.889,3519.965,32.0,0.569,0.569,1.766,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,31,0.01,4.331,3117.997,32.0,0.52,0.52,1.682,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,32,0.01,4.376,3150.537,32.0,0.478,0.478,1.612,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,33,0.01,4.341,3125.0,32.0,0.441,0.441,1.555,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,34,0.01,4.44,3196.484,32.0,0.409,0.409,1.506,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,35,0.01,4.393,3162.368,32.0,0.383,0.383,1.466,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,36,0.011,4.143,2982.571,32.0,0.356,0.356,1.428,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,37,0.01,4.675,3365.941,32.0,0.333,0.333,1.395,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,38,0.01,4.259,3066.015,32.0,0.319,0.319,1.375,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,39,0.01,4.291,3089.101,32.0,0.312,0.312,1.366,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,40,0.01,4.459,3210.273,32.0,0.302,0.302,1.353,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,41,0.01,4.324,3112.84,32.0,0.296,0.296,1.344,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,42,0.01,4.377,3151.157,32.0,0.287,0.287,1.333,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,43,0.01,4.352,3133.262,32.0,0.286,0.286,1.331,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,44,0.01,4.411,3175.233,32.0,0.279,0.279,1.322,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,45,0.01,4.381,3153.952,32.0,0.274,0.274,1.315,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,46,0.01,4.381,3153.641,32.0,0.274,0.274,1.315,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,47,0.01,4.412,3176.179,32.0,0.272,0.272,1.313,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,48,0.01,4.375,3149.606,32.0,0.269,0.269,1.309,0.0
+moe_deepseek_under_1b_tpu,tpu,moe,deepseek_moe_under_1b,DeepSeek MoE scaled under 1B,49,0.01,4.328,3116.175,32.0,0.268,0.268,1.307,0.0

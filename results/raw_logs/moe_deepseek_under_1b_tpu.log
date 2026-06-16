@@ -1,0 +1,866 @@
+/usr/bin/python3 -m maxtext.trainers.pre_train.train steps=50 dataset_type=synthetic per_device_batch_size=1 max_target_length=32 log_period=1 enable_checkpointing=false async_checkpointing=false save_checkpoint_on_completion=false enable_tensorboard=true gcs_metrics=false save_config_to_gcs=false dtype=bfloat16 weight_dtype=bfloat16 grad_dtype=float32 attention=dot_product remat_policy=full scan_layers=true skip_jax_distributed_system=true base_output_directory=/content/zenteiq_maxtext_outputs override_model_config=true base_emb_dim=1024 base_num_query_heads=8 base_num_kv_heads=8 base_mlp_dim=4096 base_moe_mlp_dim=768 base_num_decoder_layers=12 first_num_dense_layers=2 vocab_size=102400 num_experts=8 num_experts_per_tok=2 shared_experts=1 sparse_matmul=false megablox=false routed_scaling_factor=1.0 routed_score_func=softmax routed_bias=false q_lora_rank=0 kv_lora_rank=256 qk_nope_head_dim=64 qk_rope_head_dim=32 v_head_dim=128 max_position_embeddings=4096 original_max_position_embeddings=4096 rope_factor=1 model_name=deepseek2-16b run_name=moe_deepseek_under_1b_tpu hardware=tpu
+
+/usr/local/lib/python3.12/dist-packages/jax/_src/cloud_tpu_init.py:93: UserWarning: Transparent hugepages are not enabled. TPU runtime startup and shutdown time should be significantly improved on TPU v5e and newer. If not already set, you may need to enable transparent hugepages in your VM image (sudo sh -c "echo always > /sys/kernel/mm/transparent_hugepage/enabled")
+  warnings.warn(
+WARNING:absl:Grain multiprocess worker profiling requires jaxlib extension version 448 or later (jaxlib >= 0.11.0). Current version: 420.
+/usr/local/lib/python3.12/dist-packages/torch_xla/__init__.py:246: UserWarning: `tensorflow` can conflict with `torch-xla`. Prefer `tensorflow-cpu` when using PyTorch/XLA. To silence this warning, `pip uninstall -y tensorflow && pip install tensorflow-cpu`. If you are in a notebook environment such as Colab or Kaggle, restart your notebook runtime afterwards.
+  warnings.warn(
+[transformers] DeepseekV32Config got `key=rope_scaling` in kwargs but hasn't set it as attribute. For RoPE standardization you need to set `self.rope_parameters` in model's config. 
+W0616 17:34:58.302408 138762116132864 pyconfig.py:100] No config file provided, using default config mapping: /usr/local/lib/python3.12/dist-packages/maxtext/configs/base.yml
+I0616 17:34:58.457011 138762116132864 max_utils.py:243] Skipping jax distributed system due to skip_jax_distributed_system=True flag.
+I0616 17:34:58.487424   35540 pjrt_api.cc:118] GetPjrtApi was found for tpu at /usr/local/lib/python3.12/dist-packages/libtpu/libtpu.so
+I0616 17:34:58.487461   35540 pjrt_api.cc:96] PJRT_Api is set for device type tpu
+I0616 17:34:58.487473   35540 pjrt_api.cc:167] The PJRT plugin has PJRT API version 0.100. The framework PJRT API version is 0.100.
+I0616 17:35:00.514025   35540 pjrt_c_api_client.cc:182] PjRtCApiClient created.
+I0616 17:35:00.514460   35540 pjrt_client.cc:569] PjRt-IFRT device count: total=1, addressable=1
+I0616 17:35:00.514469   35540 pjrt_client.cc:573] Addressable PjRt-IFRT device: TpuDevice(id=0, process_index=0, coords=(0,0,0), core_on_chip=0)
+I0616 17:35:00.515464 138762116132864 pyconfig.py:457] Config param abort_on_inf_loss: True
+I0616 17:35:00.515559 138762116132864 pyconfig.py:457] Config param abort_on_nan_loss: True
+I0616 17:35:00.515585 138762116132864 pyconfig.py:457] Config param act_quantization_calibration_method: absmax
+I0616 17:35:00.515605 138762116132864 pyconfig.py:457] Config param activation_dropout_for_audio: 0.0
+I0616 17:35:00.515622 138762116132864 pyconfig.py:457] Config param activation_function_for_audio: gelu
+I0616 17:35:00.515638 138762116132864 pyconfig.py:457] Config param activations_in_float32: False
+I0616 17:35:00.515652 138762116132864 pyconfig.py:457] Config param adam_b1: 0.9
+I0616 17:35:00.515669 138762116132864 pyconfig.py:457] Config param adam_b2: 0.95
+I0616 17:35:00.515684 138762116132864 pyconfig.py:457] Config param adam_eps: 1e-08
+I0616 17:35:00.515701 138762116132864 pyconfig.py:457] Config param adam_eps_root: 0.0
+I0616 17:35:00.515715 138762116132864 pyconfig.py:457] Config param adam_weight_decay: 0.1
+I0616 17:35:00.515729 138762116132864 pyconfig.py:457] Config param adamw_mask: []
+I0616 17:35:00.515743 138762116132864 pyconfig.py:457] Config param add_bos: True
+I0616 17:35:00.515756 138762116132864 pyconfig.py:457] Config param add_eos: True
+I0616 17:35:00.515769 138762116132864 pyconfig.py:457] Config param allow_split_physical_axes: False
+I0616 17:35:00.515784 138762116132864 pyconfig.py:457] Config param ar_cache_axis_order: 1,2,0,3
+I0616 17:35:00.515797 138762116132864 pyconfig.py:457] Config param async_checkpointing: False
+I0616 17:35:00.515810 138762116132864 pyconfig.py:457] Config param async_scheduling: False
+I0616 17:35:00.515824 138762116132864 pyconfig.py:457] Config param attention: dot_product
+I0616 17:35:00.515837 138762116132864 pyconfig.py:457] Config param attention_bias: False
+I0616 17:35:00.515851 138762116132864 pyconfig.py:457] Config param attention_dropout_for_audio: 0.0
+I0616 17:35:00.515864 138762116132864 pyconfig.py:457] Config param attention_out: RematLocation.REMAT
+I0616 17:35:00.515882 138762116132864 pyconfig.py:457] Config param attention_output_dim: -1
+I0616 17:35:00.515897 138762116132864 pyconfig.py:457] Config param attention_sink: False
+I0616 17:35:00.515911 138762116132864 pyconfig.py:457] Config param attention_type: mla
+I0616 17:35:00.515924 138762116132864 pyconfig.py:457] Config param attn_logits_soft_cap: None
+I0616 17:35:00.515938 138762116132864 pyconfig.py:457] Config param audio_path: 
+I0616 17:35:00.515950 138762116132864 pyconfig.py:457] Config param audio_placeholder: <|audio|>
+I0616 17:35:00.515963 138762116132864 pyconfig.py:457] Config param autoregressive_decode_assert: 
+I0616 17:35:00.515978 138762116132864 pyconfig.py:457] Config param base_config: None
+I0616 17:35:00.515993 138762116132864 pyconfig.py:457] Config param base_emb_dim: 1024
+I0616 17:35:00.516006 138762116132864 pyconfig.py:457] Config param base_mlp_dim: 4096
+I0616 17:35:00.516019 138762116132864 pyconfig.py:457] Config param base_moe_mlp_dim: 768
+I0616 17:35:00.516032 138762116132864 pyconfig.py:457] Config param base_num_decoder_layers: 12
+I0616 17:35:00.516045 138762116132864 pyconfig.py:457] Config param base_num_kv_heads: 8
+I0616 17:35:00.516058 138762116132864 pyconfig.py:457] Config param base_num_query_heads: 8
+I0616 17:35:00.516072 138762116132864 pyconfig.py:457] Config param base_output_directory: /content/zenteiq_maxtext_outputs
+I0616 17:35:00.516087 138762116132864 pyconfig.py:457] Config param batch_size: 1
+I0616 17:35:00.516100 138762116132864 pyconfig.py:457] Config param batch_split_factor: 1
+I0616 17:35:00.516113 138762116132864 pyconfig.py:457] Config param beta_fast: 32
+I0616 17:35:00.516126 138762116132864 pyconfig.py:457] Config param beta_slow: 1
+I0616 17:35:00.516139 138762116132864 pyconfig.py:457] Config param bwd_quantization_calibration_method: absmax
+I0616 17:35:00.516151 138762116132864 pyconfig.py:457] Config param capacity_factor: -1.0
+I0616 17:35:00.516164 138762116132864 pyconfig.py:457] Config param cast_logits_to_fp32: True
+I0616 17:35:00.516178 138762116132864 pyconfig.py:457] Config param chat_template: 
+I0616 17:35:00.516191 138762116132864 pyconfig.py:457] Config param chat_template_path: 
+I0616 17:35:00.516204 138762116132864 pyconfig.py:457] Config param checkpoint_conversion_fn: None
+I0616 17:35:00.516216 138762116132864 pyconfig.py:457] Config param checkpoint_dir: /content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/checkpoints/
+I0616 17:35:00.516229 138762116132864 pyconfig.py:457] Config param checkpoint_is_quantized: False
+I0616 17:35:00.516243 138762116132864 pyconfig.py:457] Config param checkpoint_period: 10000
+I0616 17:35:00.516257 138762116132864 pyconfig.py:457] Config param checkpoint_storage_concurrent_gb: 96
+I0616 17:35:00.516272 138762116132864 pyconfig.py:457] Config param checkpoint_storage_target_data_file_size_bytes: 2147483648
+I0616 17:35:00.516286 138762116132864 pyconfig.py:457] Config param checkpoint_storage_use_ocdbt: True
+I0616 17:35:00.516299 138762116132864 pyconfig.py:457] Config param checkpoint_storage_use_zarr3: True
+I0616 17:35:00.516312 138762116132864 pyconfig.py:457] Config param checkpoint_todelete_full_path: None
+I0616 17:35:00.516324 138762116132864 pyconfig.py:457] Config param checkpoint_todelete_subdir: None
+I0616 17:35:00.516335 138762116132864 pyconfig.py:457] Config param chips_per_vm: 4
+I0616 17:35:00.516346 138762116132864 pyconfig.py:457] Config param chunk_attn_window_size: 0
+I0616 17:35:00.516367 138762116132864 pyconfig.py:457] Config param collect_stack_trace: False
+I0616 17:35:00.516380 138762116132864 pyconfig.py:457] Config param colocated_python_checkpointing: False
+I0616 17:35:00.516398 138762116132864 pyconfig.py:457] Config param colocated_python_data_input: False
+I0616 17:35:00.516410 138762116132864 pyconfig.py:457] Config param compile_topology: 
+I0616 17:35:00.516423 138762116132864 pyconfig.py:457] Config param compile_topology_num_slices: -1
+I0616 17:35:00.516435 138762116132864 pyconfig.py:457] Config param compile_xla_flags: 
+I0616 17:35:00.516448 138762116132864 pyconfig.py:457] Config param compiled_trainstep_file: 
+I0616 17:35:00.516461 138762116132864 pyconfig.py:457] Config param compute_axis_order: 0,1,2,3
+I0616 17:35:00.516473 138762116132864 pyconfig.py:457] Config param constant_bound_config: []
+I0616 17:35:00.516486 138762116132864 pyconfig.py:457] Config param context: RematLocation.REMAT
+I0616 17:35:00.516499 138762116132864 pyconfig.py:457] Config param context_parallel_load_balance: True
+I0616 17:35:00.516511 138762116132864 pyconfig.py:457] Config param context_parallel_reorder_strategy: ReorderStrategy.AUTO
+I0616 17:35:00.516525 138762116132864 pyconfig.py:457] Config param context_parallel_size: 1
+I0616 17:35:00.516537 138762116132864 pyconfig.py:457] Config param context_parallel_strategy: all_gather
+I0616 17:35:00.516550 138762116132864 pyconfig.py:457] Config param context_sharding: context
+I0616 17:35:00.516562 138762116132864 pyconfig.py:457] Config param conv_chunksize_for_audio: 500
+I0616 17:35:00.516574 138762116132864 pyconfig.py:457] Config param conv_stride_for_vit: 14
+I0616 17:35:00.516587 138762116132864 pyconfig.py:457] Config param convert_checkpoint_if_possible: False
+I0616 17:35:00.516599 138762116132864 pyconfig.py:457] Config param cost_estimate_flops_bwd: -1
+I0616 17:35:00.516612 138762116132864 pyconfig.py:457] Config param cost_estimate_flops_fwd: -1
+I0616 17:35:00.516624 138762116132864 pyconfig.py:457] Config param custom_mesh: 
+I0616 17:35:00.516637 138762116132864 pyconfig.py:457] Config param custom_mesh_and_rule: CustomRule.DEFAULT
+I0616 17:35:00.516652 138762116132864 pyconfig.py:457] Config param d_model_for_audio: 256
+I0616 17:35:00.516664 138762116132864 pyconfig.py:457] Config param data_sharding: (('data', 'stage', 'fsdp', 'fsdp_transpose', 'context', 'context_autoregressive', 'tensor', 'tensor_transpose', 'tensor_sequence', 'expert', 'autoregressive'),)
+I0616 17:35:00.516684 138762116132864 pyconfig.py:457] Config param data_shuffle_seed: 0
+I0616 17:35:00.516697 138762116132864 pyconfig.py:457] Config param dataset_name: c4/en:3.0.1
+I0616 17:35:00.516709 138762116132864 pyconfig.py:457] Config param dataset_path: 
+I0616 17:35:00.516722 138762116132864 pyconfig.py:457] Config param dataset_type: DatasetType.SYNTHETIC
+I0616 17:35:00.516736 138762116132864 pyconfig.py:457] Config param dcn_autoregressive_parallelism: 1
+I0616 17:35:00.516749 138762116132864 pyconfig.py:457] Config param dcn_context_autoregressive_parallelism: 1
+I0616 17:35:00.516761 138762116132864 pyconfig.py:457] Config param dcn_context_parallelism: 1
+I0616 17:35:00.516774 138762116132864 pyconfig.py:457] Config param dcn_data_parallelism: -1
+I0616 17:35:00.516787 138762116132864 pyconfig.py:457] Config param dcn_diloco_parallelism: 1
+I0616 17:35:00.516799 138762116132864 pyconfig.py:457] Config param dcn_expert_parallelism: 1
+I0616 17:35:00.516812 138762116132864 pyconfig.py:457] Config param dcn_fsdp_parallelism: 1
+I0616 17:35:00.516824 138762116132864 pyconfig.py:457] Config param dcn_fsdp_transpose_parallelism: 1
+I0616 17:35:00.516837 138762116132864 pyconfig.py:457] Config param dcn_parallelism: [1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+I0616 17:35:00.516850 138762116132864 pyconfig.py:457] Config param dcn_pipeline_parallelism: 1
+I0616 17:35:00.516863 138762116132864 pyconfig.py:457] Config param dcn_sequence_parallelism: 1
+I0616 17:35:00.516876 138762116132864 pyconfig.py:457] Config param dcn_tensor_parallelism: 1
+I0616 17:35:00.516891 138762116132864 pyconfig.py:457] Config param dcn_tensor_sequence_parallelism: 1
+I0616 17:35:00.516902 138762116132864 pyconfig.py:457] Config param dcn_tensor_transpose_parallelism: 1
+I0616 17:35:00.516913 138762116132864 pyconfig.py:457] Config param debug: {'rl': False}
+I0616 17:35:00.516926 138762116132864 pyconfig.py:457] Config param debug_converter: False
+I0616 17:35:00.516937 138762116132864 pyconfig.py:457] Config param debug_sharding: False
+I0616 17:35:00.516950 138762116132864 pyconfig.py:457] Config param decode_sampling_nucleus_p: -1
+I0616 17:35:00.516961 138762116132864 pyconfig.py:457] Config param decode_sampling_strategy: SamplingStrategy.GREEDY
+I0616 17:35:00.516975 138762116132864 pyconfig.py:457] Config param decode_sampling_temperature: 1.0
+I0616 17:35:00.516988 138762116132864 pyconfig.py:457] Config param decode_sampling_top_k: 0
+I0616 17:35:00.517001 138762116132864 pyconfig.py:457] Config param decoder_block: DecoderBlockType.DEEPSEEK
+I0616 17:35:00.517014 138762116132864 pyconfig.py:457] Config param decoder_layer_input: RematLocation.DEVICE
+I0616 17:35:00.517028 138762116132864 pyconfig.py:457] Config param deepstack_visual_indexes_for_vit: []
+I0616 17:35:00.517040 138762116132864 pyconfig.py:457] Config param degenerate_group_masking: True
+I0616 17:35:00.517053 138762116132864 pyconfig.py:457] Config param dense_init_scale: 1.0
+I0616 17:35:00.517066 138762116132864 pyconfig.py:457] Config param diloco_outer_lr: 0.3
+I0616 17:35:00.517078 138762116132864 pyconfig.py:457] Config param diloco_outer_momentum: 0.9
+I0616 17:35:00.517091 138762116132864 pyconfig.py:457] Config param diloco_sync_period: 36
+I0616 17:35:00.517103 138762116132864 pyconfig.py:457] Config param distill_alpha: 0.5
+I0616 17:35:00.517117 138762116132864 pyconfig.py:457] Config param distill_alpha_end: None
+I0616 17:35:00.517130 138762116132864 pyconfig.py:457] Config param distill_alpha_schedule: constant
+I0616 17:35:00.517144 138762116132864 pyconfig.py:457] Config param distill_beta: 0.0
+I0616 17:35:00.517157 138762116132864 pyconfig.py:457] Config param distill_beta_end: None
+I0616 17:35:00.517170 138762116132864 pyconfig.py:457] Config param distill_beta_schedule: constant
+I0616 17:35:00.517183 138762116132864 pyconfig.py:457] Config param distill_feature_loss_type: cosine
+I0616 17:35:00.517196 138762116132864 pyconfig.py:457] Config param distill_layer_indices: None
+I0616 17:35:00.517210 138762116132864 pyconfig.py:457] Config param distill_student_weights_share_map: {}
+I0616 17:35:00.517223 138762116132864 pyconfig.py:457] Config param distill_temperature: 1.0
+I0616 17:35:00.517236 138762116132864 pyconfig.py:457] Config param distill_temperature_end: None
+I0616 17:35:00.517249 138762116132864 pyconfig.py:457] Config param distill_temperature_schedule: constant
+I0616 17:35:00.517262 138762116132864 pyconfig.py:457] Config param distill_weights_copy_map: {}
+I0616 17:35:00.517275 138762116132864 pyconfig.py:457] Config param downsample_hidden_size_for_audio: 256
+I0616 17:35:00.517287 138762116132864 pyconfig.py:457] Config param dpo_beta: 0.1
+I0616 17:35:00.517301 138762116132864 pyconfig.py:457] Config param dpo_label_smoothing: 0.0
+I0616 17:35:00.517313 138762116132864 pyconfig.py:457] Config param dq_reduction_steps: 0
+I0616 17:35:00.517326 138762116132864 pyconfig.py:457] Config param dropout_rate: 0.0
+I0616 17:35:00.517339 138762116132864 pyconfig.py:457] Config param dtype: bfloat16
+I0616 17:35:00.517374 138762116132864 pyconfig.py:457] Config param dtype_mm: float32
+I0616 17:35:00.517392 138762116132864 pyconfig.py:457] Config param dump_hlo: False
+I0616 17:35:00.517405 138762116132864 pyconfig.py:457] Config param dump_hlo_delete_local_after: True
+I0616 17:35:00.517417 138762116132864 pyconfig.py:457] Config param dump_hlo_gcs_dir: /content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/xla_dump
+I0616 17:35:00.517431 138762116132864 pyconfig.py:457] Config param dump_hlo_local_dir: /tmp/xla_dump/
+I0616 17:35:00.517442 138762116132864 pyconfig.py:457] Config param dump_hlo_local_module_name: jit_train_step
+I0616 17:35:00.517454 138762116132864 pyconfig.py:457] Config param dump_hlo_module_name: jit_train_step
+I0616 17:35:00.517466 138762116132864 pyconfig.py:457] Config param dump_hlo_upload_all: False
+I0616 17:35:00.517479 138762116132864 pyconfig.py:457] Config param dump_hlo_xla_flags: 
+I0616 17:35:00.517492 138762116132864 pyconfig.py:457] Config param dump_jaxpr: False
+I0616 17:35:00.517504 138762116132864 pyconfig.py:457] Config param dump_jaxpr_delete_local_after: True
+I0616 17:35:00.517517 138762116132864 pyconfig.py:457] Config param dump_jaxpr_gcs_dir: /content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/jaxpr_dump
+I0616 17:35:00.517529 138762116132864 pyconfig.py:457] Config param dump_jaxpr_local_dir: /tmp/jaxpr_dump/
+I0616 17:35:00.517542 138762116132864 pyconfig.py:457] Config param dump_step: -1
+I0616 17:35:00.517554 138762116132864 pyconfig.py:457] Config param elastic_enabled: False
+I0616 17:35:00.517567 138762116132864 pyconfig.py:457] Config param elastic_max_retries: 10
+I0616 17:35:00.517579 138762116132864 pyconfig.py:457] Config param elastic_min_slice_count: -1
+I0616 17:35:00.517592 138762116132864 pyconfig.py:457] Config param elastic_timeout_seconds: 300
+I0616 17:35:00.517603 138762116132864 pyconfig.py:457] Config param emb_dim: 1024
+I0616 17:35:00.517615 138762116132864 pyconfig.py:457] Config param enable_autocheckpoint: False
+I0616 17:35:00.517628 138762116132864 pyconfig.py:457] Config param enable_checkpoint_cloud_logger: False
+I0616 17:35:00.517641 138762116132864 pyconfig.py:457] Config param enable_checkpointing: False
+I0616 17:35:00.517653 138762116132864 pyconfig.py:457] Config param enable_continuous_checkpointing: False
+I0616 17:35:00.517666 138762116132864 pyconfig.py:457] Config param enable_data_shuffling: True
+I0616 17:35:00.517678 138762116132864 pyconfig.py:457] Config param enable_diloco: False
+I0616 17:35:00.517691 138762116132864 pyconfig.py:457] Config param enable_dp_attention: False
+I0616 17:35:00.517703 138762116132864 pyconfig.py:457] Config param enable_dropout: False
+I0616 17:35:00.517715 138762116132864 pyconfig.py:457] Config param enable_emergency_checkpoint: False
+I0616 17:35:00.517728 138762116132864 pyconfig.py:457] Config param enable_expert_parallel: False
+I0616 17:35:00.517740 138762116132864 pyconfig.py:457] Config param enable_gcp_goodput_metrics: True
+I0616 17:35:00.517753 138762116132864 pyconfig.py:457] Config param enable_gcp_step_deviation_metrics: True
+I0616 17:35:00.517765 138762116132864 pyconfig.py:457] Config param enable_goodput_recording: False
+I0616 17:35:00.517778 138762116132864 pyconfig.py:457] Config param enable_jax_profiler: False
+I0616 17:35:00.517791 138762116132864 pyconfig.py:457] Config param enable_llm_inference_pool: False
+I0616 17:35:00.517803 138762116132864 pyconfig.py:457] Config param enable_model_warmup: False
+I0616 17:35:00.517815 138762116132864 pyconfig.py:457] Config param enable_multi_tier_checkpointing: False
+I0616 17:35:00.517827 138762116132864 pyconfig.py:457] Config param enable_nnx: False
+I0616 17:35:00.517840 138762116132864 pyconfig.py:457] Config param enable_orbax_v1: False
+I0616 17:35:00.517853 138762116132864 pyconfig.py:457] Config param enable_padding_causal_mask: True
+I0616 17:35:00.517865 138762116132864 pyconfig.py:457] Config param enable_pathways_goodput: False
+I0616 17:35:00.517878 138762116132864 pyconfig.py:457] Config param enable_prefix_caching: False
+I0616 17:35:00.517890 138762116132864 pyconfig.py:457] Config param enable_rampup_batch_size: False
+I0616 17:35:00.517902 138762116132864 pyconfig.py:457] Config param enable_single_controller: False
+I0616 17:35:00.517915 138762116132864 pyconfig.py:457] Config param enable_single_replica_ckpt_restoring: False
+I0616 17:35:00.517927 138762116132864 pyconfig.py:457] Config param enable_tensorboard: True
+I0616 17:35:00.517940 138762116132864 pyconfig.py:457] Config param enable_tpu_profiling_options: False
+I0616 17:35:00.517952 138762116132864 pyconfig.py:457] Config param enable_tunix_perf_metrics: False
+I0616 17:35:00.517964 138762116132864 pyconfig.py:457] Config param encoder_attention_heads_for_audio: 4
+I0616 17:35:00.517976 138762116132864 pyconfig.py:457] Config param encoder_ffn_dim_for_audio: 512
+I0616 17:35:00.517989 138762116132864 pyconfig.py:457] Config param encoder_layers_for_audio: 2
+I0616 17:35:00.518002 138762116132864 pyconfig.py:457] Config param engram: RematLocation.REMAT
+I0616 17:35:00.518014 138762116132864 pyconfig.py:457] Config param engram_head_dim: 1280
+I0616 17:35:00.518027 138762116132864 pyconfig.py:457] Config param engram_kernel_size: 4
+I0616 17:35:00.518039 138762116132864 pyconfig.py:457] Config param engram_layers: []
+I0616 17:35:00.518052 138762116132864 pyconfig.py:457] Config param engram_max_ngram_size: 3
+I0616 17:35:00.518064 138762116132864 pyconfig.py:457] Config param engram_num_heads: 8
+I0616 17:35:00.518076 138762116132864 pyconfig.py:457] Config param engram_seed: 0
+I0616 17:35:00.518090 138762116132864 pyconfig.py:457] Config param engram_vocab_bases: []
+I0616 17:35:00.518102 138762116132864 pyconfig.py:457] Config param epsilon_high: None
+I0616 17:35:00.518115 138762116132864 pyconfig.py:457] Config param eval_corr_lst: False
+I0616 17:35:00.518127 138762116132864 pyconfig.py:457] Config param eval_data_columns: ['text']
+I0616 17:35:00.518140 138762116132864 pyconfig.py:457] Config param eval_dataset_name: c4/en:3.0.1
+I0616 17:35:00.518152 138762116132864 pyconfig.py:457] Config param eval_image_column: image
+I0616 17:35:00.518164 138762116132864 pyconfig.py:457] Config param eval_interval: -1
+I0616 17:35:00.518177 138762116132864 pyconfig.py:457] Config param eval_make_lst: False
+I0616 17:35:00.518189 138762116132864 pyconfig.py:457] Config param eval_mode: pass
+I0616 17:35:00.518202 138762116132864 pyconfig.py:457] Config param eval_per_device_batch_size: 1
+I0616 17:35:00.518215 138762116132864 pyconfig.py:457] Config param eval_sampling_strategy: greedy
+I0616 17:35:00.518227 138762116132864 pyconfig.py:457] Config param eval_split: validation
+I0616 17:35:00.518239 138762116132864 pyconfig.py:457] Config param eval_steps: -1
+I0616 17:35:00.518252 138762116132864 pyconfig.py:457] Config param expansion_factor_real_data: -1.0
+I0616 17:35:00.518264 138762116132864 pyconfig.py:457] Config param final_logits_soft_cap: None
+I0616 17:35:00.518277 138762116132864 pyconfig.py:457] Config param first_num_dense_layers: 2
+I0616 17:35:00.518289 138762116132864 pyconfig.py:457] Config param float32_gate_logits: False
+I0616 17:35:00.518302 138762116132864 pyconfig.py:457] Config param float32_logits: False
+I0616 17:35:00.518315 138762116132864 pyconfig.py:457] Config param float32_qk_product: False
+I0616 17:35:00.518327 138762116132864 pyconfig.py:457] Config param float32_weight_sum: True
+I0616 17:35:00.518339 138762116132864 pyconfig.py:457] Config param force_q_layout: False
+I0616 17:35:00.518360 138762116132864 pyconfig.py:457] Config param force_unroll: False
+I0616 17:35:00.518372 138762116132864 pyconfig.py:457] Config param formatting_func_kwargs: {}
+I0616 17:35:00.518390 138762116132864 pyconfig.py:457] Config param formatting_func_path: 
+I0616 17:35:00.518403 138762116132864 pyconfig.py:457] Config param freeze_audio_encoder_params: True
+I0616 17:35:00.518415 138762116132864 pyconfig.py:457] Config param freeze_vision_encoder_params: True
+I0616 17:35:00.518428 138762116132864 pyconfig.py:457] Config param fused_mlp: False
+I0616 17:35:00.518440 138762116132864 pyconfig.py:457] Config param fused_qkv: False
+I0616 17:35:00.518453 138762116132864 pyconfig.py:457] Config param gcs_debug_path: 
+I0616 17:35:00.518465 138762116132864 pyconfig.py:457] Config param gcs_metrics: False
+I0616 17:35:00.518478 138762116132864 pyconfig.py:457] Config param gdn_chunk_size: 64
+I0616 17:35:00.518491 138762116132864 pyconfig.py:457] Config param gdn_conv_kernel_dim: 4
+I0616 17:35:00.518504 138762116132864 pyconfig.py:457] Config param gdn_key_head_dim: 128
+I0616 17:35:00.518516 138762116132864 pyconfig.py:457] Config param gdn_num_key_heads: 16
+I0616 17:35:00.518527 138762116132864 pyconfig.py:457] Config param gdn_num_value_heads: 32
+I0616 17:35:00.518540 138762116132864 pyconfig.py:457] Config param gdn_value_head_dim: 128
+I0616 17:35:00.518553 138762116132864 pyconfig.py:457] Config param generate_padding_batch_eval: False
+I0616 17:35:00.518565 138762116132864 pyconfig.py:457] Config param generate_padding_batch_train: False
+I0616 17:35:00.518578 138762116132864 pyconfig.py:457] Config param generate_slice: v5e-16
+I0616 17:35:00.518590 138762116132864 pyconfig.py:457] Config param generation_configs: {}
+I0616 17:35:00.518603 138762116132864 pyconfig.py:457] Config param global_batch_size_to_eval_on: 1
+I0616 17:35:00.518615 138762116132864 pyconfig.py:457] Config param global_batch_size_to_load: 1
+I0616 17:35:00.518628 138762116132864 pyconfig.py:457] Config param global_batch_size_to_load_eval: 1
+I0616 17:35:00.518640 138762116132864 pyconfig.py:457] Config param global_batch_size_to_load_increment: None
+I0616 17:35:00.518652 138762116132864 pyconfig.py:457] Config param global_batch_size_to_load_start: None
+I0616 17:35:00.518665 138762116132864 pyconfig.py:457] Config param global_batch_size_to_train_on: 1
+I0616 17:35:00.518677 138762116132864 pyconfig.py:457] Config param global_head_dim: 0
+I0616 17:35:00.518691 138762116132864 pyconfig.py:457] Config param global_num_kv_heads: 0
+I0616 17:35:00.518702 138762116132864 pyconfig.py:457] Config param global_parameter_scale: 1
+I0616 17:35:00.518715 138762116132864 pyconfig.py:457] Config param global_rampup_samples: 500
+I0616 17:35:00.518728 138762116132864 pyconfig.py:457] Config param global_rope_max_timescale: -1
+I0616 17:35:00.518740 138762116132864 pyconfig.py:457] Config param global_rope_proportion: 0.25
+I0616 17:35:00.518754 138762116132864 pyconfig.py:457] Config param goodput_upload_interval_seconds: 30
+I0616 17:35:00.518767 138762116132864 pyconfig.py:457] Config param grad_dtype: float32
+I0616 17:35:00.518801 138762116132864 pyconfig.py:457] Config param gradient_accumulation_steps: 1
+I0616 17:35:00.518815 138762116132864 pyconfig.py:457] Config param gradient_clipping_threshold: 1.0
+I0616 17:35:00.518828 138762116132864 pyconfig.py:457] Config param grain_data_source_max_workers: 16
+I0616 17:35:00.518842 138762116132864 pyconfig.py:457] Config param grain_eval_files: 
+I0616 17:35:00.518854 138762116132864 pyconfig.py:457] Config param grain_file_type: arrayrecord
+I0616 17:35:00.518867 138762116132864 pyconfig.py:457] Config param grain_num_threads: 16
+I0616 17:35:00.518881 138762116132864 pyconfig.py:457] Config param grain_num_threads_eval: 16
+I0616 17:35:00.518893 138762116132864 pyconfig.py:457] Config param grain_packing_type: first_fit
+I0616 17:35:00.518906 138762116132864 pyconfig.py:457] Config param grain_per_worker_buffer_size: 1
+I0616 17:35:00.518919 138762116132864 pyconfig.py:457] Config param grain_per_worker_buffer_size_eval: 1
+I0616 17:35:00.518931 138762116132864 pyconfig.py:457] Config param grain_prefetch_buffer_size: 500
+I0616 17:35:00.518944 138762116132864 pyconfig.py:457] Config param grain_prefetch_buffer_size_eval: 500
+I0616 17:35:00.518957 138762116132864 pyconfig.py:457] Config param grain_ram_budget_mb: 1024
+I0616 17:35:00.518969 138762116132864 pyconfig.py:457] Config param grain_shuffle_buffer_size: 100
+I0616 17:35:00.518982 138762116132864 pyconfig.py:457] Config param grain_train_files: 
+I0616 17:35:00.518995 138762116132864 pyconfig.py:457] Config param grain_train_mixture_config_path: 
+I0616 17:35:00.519007 138762116132864 pyconfig.py:457] Config param grain_use_elastic_iterator: False
+I0616 17:35:00.519020 138762116132864 pyconfig.py:457] Config param grain_worker_count: 1
+I0616 17:35:00.519033 138762116132864 pyconfig.py:457] Config param grain_worker_count_eval: 1
+I0616 17:35:00.519045 138762116132864 pyconfig.py:457] Config param grpo_beta: 0.08
+I0616 17:35:00.519058 138762116132864 pyconfig.py:457] Config param grpo_epsilon: 0.2
+I0616 17:35:00.519071 138762116132864 pyconfig.py:457] Config param hardware: tpu
+I0616 17:35:00.519084 138762116132864 pyconfig.py:457] Config param hbm_utilization_vllm: 0.72
+I0616 17:35:00.519100 138762116132864 pyconfig.py:457] Config param head_dim: 128
+I0616 17:35:00.519178 138762116132864 pyconfig.py:457] Config param heartbeat_reporting_interval_in_seconds: 5
+I0616 17:35:00.519205 138762116132864 pyconfig.py:457] Config param hf_data_dir: None
+I0616 17:35:00.519222 138762116132864 pyconfig.py:457] Config param hf_eval_files: None
+I0616 17:35:00.519237 138762116132864 pyconfig.py:457] Config param hf_eval_split: None
+I0616 17:35:00.519251 138762116132864 pyconfig.py:457] Config param hf_name: None
+I0616 17:35:00.519264 138762116132864 pyconfig.py:457] Config param hf_path: 
+I0616 17:35:00.519277 138762116132864 pyconfig.py:457] Config param hf_train_files: None
+I0616 17:35:00.519290 138762116132864 pyconfig.py:457] Config param hidden_size_for_vit: 1408
+I0616 17:35:00.519303 138762116132864 pyconfig.py:457] Config param hide_profiler_step_metric: False
+I0616 17:35:00.519316 138762116132864 pyconfig.py:457] Config param ici_autoregressive_parallelism: 1
+I0616 17:35:00.519329 138762116132864 pyconfig.py:457] Config param ici_context_autoregressive_parallelism: 1
+I0616 17:35:00.519342 138762116132864 pyconfig.py:457] Config param ici_context_parallelism: 1
+I0616 17:35:00.519364 138762116132864 pyconfig.py:457] Config param ici_data_parallelism: 1
+I0616 17:35:00.519378 138762116132864 pyconfig.py:457] Config param ici_diloco_parallelism: 1
+I0616 17:35:00.519393 138762116132864 pyconfig.py:457] Config param ici_expert_parallelism: 1
+I0616 17:35:00.519407 138762116132864 pyconfig.py:457] Config param ici_fsdp_parallelism: -1
+I0616 17:35:00.519421 138762116132864 pyconfig.py:457] Config param ici_fsdp_transpose_parallelism: 1
+I0616 17:35:00.519434 138762116132864 pyconfig.py:457] Config param ici_parallelism: [1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1]
+I0616 17:35:00.519449 138762116132864 pyconfig.py:457] Config param ici_pipeline_parallelism: 1
+I0616 17:35:00.519462 138762116132864 pyconfig.py:457] Config param ici_sequence_parallelism: 1
+I0616 17:35:00.519475 138762116132864 pyconfig.py:457] Config param ici_tensor_parallelism: 1
+I0616 17:35:00.519487 138762116132864 pyconfig.py:457] Config param ici_tensor_sequence_parallelism: 1
+I0616 17:35:00.519500 138762116132864 pyconfig.py:457] Config param ici_tensor_transpose_parallelism: 1
+I0616 17:35:00.519512 138762116132864 pyconfig.py:457] Config param image_path: 
+I0616 17:35:00.519525 138762116132864 pyconfig.py:457] Config param image_placeholder: <|image|>
+I0616 17:35:00.519538 138762116132864 pyconfig.py:457] Config param image_size_for_vit: 896
+I0616 17:35:00.519551 138762116132864 pyconfig.py:457] Config param indexer_head_dim: 128
+I0616 17:35:00.519563 138762116132864 pyconfig.py:457] Config param indexer_loss_scaling_factor: 0.0
+I0616 17:35:00.519576 138762116132864 pyconfig.py:457] Config param indexer_n_heads: 64
+I0616 17:35:00.519589 138762116132864 pyconfig.py:457] Config param indexer_sparse_training: False
+I0616 17:35:00.519603 138762116132864 pyconfig.py:457] Config param indexer_topk: 2048
+I0616 17:35:00.519616 138762116132864 pyconfig.py:457] Config param inference_benchmark_test: False
+I0616 17:35:00.519628 138762116132864 pyconfig.py:457] Config param inference_metadata_file: 
+I0616 17:35:00.519641 138762116132864 pyconfig.py:457] Config param inference_microbenchmark_log_file_path: 
+I0616 17:35:00.519654 138762116132864 pyconfig.py:457] Config param inference_microbenchmark_loop_iters: 10
+I0616 17:35:00.519666 138762116132864 pyconfig.py:457] Config param inference_microbenchmark_num_samples: [1, 2, 3, 4, 5]
+I0616 17:35:00.519680 138762116132864 pyconfig.py:457] Config param inference_microbenchmark_prefill_lengths: 64,128,256,512,1024
+I0616 17:35:00.519693 138762116132864 pyconfig.py:457] Config param inference_microbenchmark_stages: prefill,generate
+I0616 17:35:00.519706 138762116132864 pyconfig.py:457] Config param inference_server: MaxtextInterleavedServer
+I0616 17:35:00.519718 138762116132864 pyconfig.py:457] Config param inhomogeneous_layer_cycle_interval: 1
+I0616 17:35:00.519731 138762116132864 pyconfig.py:457] Config param init_weights_seed: 0
+I0616 17:35:00.519743 138762116132864 pyconfig.py:457] Config param input_data_sharding_logical_axes: ['activation_embed_and_logits_batch', 'activation_norm_length']
+I0616 17:35:00.519757 138762116132864 pyconfig.py:457] Config param interleave_moe_layer_step: 1
+I0616 17:35:00.519770 138762116132864 pyconfig.py:457] Config param intermediate_size_for_vit: 5632
+I0616 17:35:00.519783 138762116132864 pyconfig.py:457] Config param internal_compile: False
+I0616 17:35:00.519796 138762116132864 pyconfig.py:457] Config param internal_compile_num_devices: -1
+I0616 17:35:00.519809 138762116132864 pyconfig.py:457] Config param jax_cache_dir: ~/jax_cache
+I0616 17:35:00.519821 138762116132864 pyconfig.py:457] Config param jax_debug_log_modules: 
+I0616 17:35:00.519834 138762116132864 pyconfig.py:457] Config param jax_distributed_initialization_timeout: 300
+I0616 17:35:00.519846 138762116132864 pyconfig.py:457] Config param jax_profiler_port: 9999
+I0616 17:35:00.519859 138762116132864 pyconfig.py:457] Config param key_proj: RematLocation.REMAT
+I0616 17:35:00.519873 138762116132864 pyconfig.py:457] Config param kv_cache_buffer: 256
+I0616 17:35:00.519886 138762116132864 pyconfig.py:457] Config param kv_lora_rank: 256
+I0616 17:35:00.519899 138762116132864 pyconfig.py:457] Config param kv_quant_axis: KvQuantAxis.HEADS_AND_DKV
+I0616 17:35:00.519913 138762116132864 pyconfig.py:457] Config param kv_quant_dtype: int8
+I0616 17:35:00.519926 138762116132864 pyconfig.py:457] Config param kv_wa_proj: RematLocation.REMAT
+I0616 17:35:00.519939 138762116132864 pyconfig.py:457] Config param learn_to_init_mode: False
+I0616 17:35:00.519951 138762116132864 pyconfig.py:457] Config param learning_rate: 3e-05
+I0616 17:35:00.519966 138762116132864 pyconfig.py:457] Config param learning_rate_final_fraction: 0.1
+I0616 17:35:00.519979 138762116132864 pyconfig.py:457] Config param learning_rate_schedule_steps: 50
+I0616 17:35:00.519992 138762116132864 pyconfig.py:457] Config param load_balance_loss_weight: 0.0
+I0616 17:35:00.520006 138762116132864 pyconfig.py:457] Config param load_checkpoint_only_once: False
+I0616 17:35:00.520018 138762116132864 pyconfig.py:457] Config param load_from_prefill_dir: False
+I0616 17:35:00.520031 138762116132864 pyconfig.py:457] Config param load_full_state_path: 
+I0616 17:35:00.520044 138762116132864 pyconfig.py:457] Config param load_parameters_path: 
+I0616 17:35:00.520056 138762116132864 pyconfig.py:457] Config param local_checkpoint_directory: 
+I0616 17:35:00.520069 138762116132864 pyconfig.py:457] Config param local_checkpoint_period: 0
+I0616 17:35:00.520081 138762116132864 pyconfig.py:457] Config param local_rope_max_timescale: -1
+I0616 17:35:00.520095 138762116132864 pyconfig.py:457] Config param local_rope_proportion: 1.0
+I0616 17:35:00.520107 138762116132864 pyconfig.py:457] Config param log_config: True
+I0616 17:35:00.520120 138762116132864 pyconfig.py:457] Config param log_period: 1
+I0616 17:35:00.520137 138762116132864 pyconfig.py:457] Config param logical_axis_rules: (('activation_embed_and_logits_batch', ('data', 'stage', 'fsdp', 'fsdp_transpose', 'expert')), ('activation_embed_and_logits_batch_sequence', ('data', 'stage', 'fsdp', 'fsdp_transpose', 'context', 'expert')), ('activation_vocab', ('tensor', 'tensor_transpose', 'tensor_sequence')), ('activation_vocab', ('tensor', 'tensor_transpose')), ('activation_vocab', 'tensor_sequence'), ('vocab', ('tensor', 'tensor_transpose', 'tensor_sequence', 'autoregressive')), ('embed_vocab', ('fsdp', 'fsdp_transpose', 'context', 'expert')), ('activation_batch_attn', ('data', 'fsdp', 'fsdp_transpose', 'expert')), ('activation_heads', ('tensor', 'tensor_transpose', 'tensor_sequence', 'autoregressive')), ('activation_kv_heads', ('tensor', 'tensor_transpose', 'tensor_sequence')), ('activation_length_attn', ('context',)), ('activation_q_length', ('context',)), ('activation_kv_length', ()), ('activation_embed_attn', ('tensor', 'tensor_transpose')), ('activation_kv', ('tensor', 'tensor_transpose', 'tensor_sequence')), ('activation_kv_batch', ('data', 'fsdp', 'fsdp_transpose', 'expert')), ('activation_kv_head_dim', ('tensor', 'tensor_transpose', 'tensor_sequence')), ('heads', ('tensor', 'tensor_transpose', 'tensor_sequence', 'autoregressive')), ('q_heads', ('tensor', 'tensor_transpose', 'tensor_sequence', 'autoregressive')), ('kv_heads', ('tensor', 'tensor_transpose', 'tensor_sequence', 'autoregressive')), ('qkv', ()), ('kv', ()), ('kv_head_dim', ()), ('q_lora', ('fsdp', 'fsdp_transpose', 'context', 'tensor_transpose', 'expert')), ('q_lora', ('fsdp', 'context', 'tensor_transpose', 'expert')), ('q_lora', ('fsdp', 'fsdp_transpose', 'context', 'expert')), ('q_lora', ('fsdp', 'context', 'expert')), ('q_lora_up_proj', ()), ('kv_lora', ('fsdp', 'fsdp_transpose', 'context', 'tensor_transpose', 'expert')), ('kv_lora', ('fsdp', 'context', 'tensor_transpose', 'expert')), ('kv_lora', ('fsdp', 'fsdp_transpose', 'context', 'expert')), ('kv_lora', ('fsdp', 'context', 'expert')), ('kv_lora_up_proj', ()), ('activation_batch_moe', ('data', 'fsdp', 'fsdp_transpose')), ('activation_length_moe', ('context',)), ('activation_norm_length_moe', ('tensor_sequence', 'context')), ('activation_embed_moe', ('tensor', 'tensor_transpose')), ('activation_mlp_moe', ('tensor', 'tensor_transpose', 'tensor_sequence')), ('activation_exp', ('expert',)), ('exp', 'expert'), ('mlp_moe', ('fsdp_transpose', 'tensor', 'tensor_sequence', 'autoregressive')), ('embed_moe', ('fsdp', 'fsdp_transpose', 'tensor_transpose', 'context')), ('embed_moe', ('fsdp', 'tensor_transpose', 'context')), ('embed_moe', ('fsdp', 'fsdp_transpose', 'context')), ('embed_moe', ('fsdp', 'context')), ('activation_mlp', ('tensor', 'tensor_transpose', 'tensor_sequence')), ('activation_batch', ('data', 'fsdp', 'fsdp_transpose', 'expert')), ('activation_length', ('context',)), ('activation_norm_length', ('tensor_sequence', 'context')), ('activation_embed', ('tensor', 'tensor_transpose')), ('activation_stage', 'stage'), ('mlp', ('fsdp_transpose', 'tensor', 'tensor_sequence', 'autoregressive')), ('embed', ('fsdp', 'fsdp_transpose', 'tensor_transpose', 'context', 'expert')), ('embed', ('fsdp', 'tensor_transpose', 'context', 'expert')), ('embed', ('fsdp', 'fsdp_transpose', 'context', 'expert')), ('embed', ('fsdp', 'context', 'expert')), ('norm', ('tensor', 'tensor_transpose')), ('layers', 'stage'), ('diloco', 'diloco'), ('engram_dim', ('tensor',)), ('dense_layers', ()), ('moe_layers', ()), ('mhc', ()), ('prefill_activation_length', ('context',)), ('prefill_activation_norm_length', ('tensor_sequence', 'context')), ('activation_prefill_kv_batch', ('data', 'fsdp', 'fsdp_transpose', 'expert')), ('decode_batch', ('data', 'fsdp', 'fsdp_transpose', 'expert')), ('decode_length', ()), ('cache_heads', ('autoregressive', 'tensor', 'tensor_transpose', 'tensor_sequence')), ('cache_heads', ('autoregressive', 'tensor', 'tensor_sequence')), ('paged_kv_heads', ('tensor',)), ('cache_batch_prefill', ()), ('cache_batch', ()), ('cache_heads_none', ()), ('cache_kv', ()), ('cache_sequence', ()), ('num_pages', ()), ('tokens_per_page', ()), ('paged_kv_head_dim_size', ()), ('mlp_no_fsdp', ('tensor', 'tensor_sequence', 'autoregressive')), ('embed_tensor_transpose', ('tensor_transpose',)), ('exp_with_fsdp', 'fsdp'))
+I0616 17:35:00.520217 138762116132864 pyconfig.py:457] Config param logits_dot_in_fp32: False
+I0616 17:35:00.520232 138762116132864 pyconfig.py:457] Config param logits_via_embedding: False
+I0616 17:35:00.520245 138762116132864 pyconfig.py:457] Config param lora_input_adapters_path: 
+I0616 17:35:00.520257 138762116132864 pyconfig.py:457] Config param loss_algo: grpo
+I0616 17:35:00.520270 138762116132864 pyconfig.py:457] Config param lr_schedule_type: LearningRateScheduleType.COSINE
+I0616 17:35:00.520285 138762116132864 pyconfig.py:457] Config param lti_use_general_linear_map: False
+I0616 17:35:00.520298 138762116132864 pyconfig.py:457] Config param managed_mldiagnostics: False
+I0616 17:35:00.520311 138762116132864 pyconfig.py:457] Config param managed_mldiagnostics_dir: /content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/managed-mldiagnostics
+I0616 17:35:00.520324 138762116132864 pyconfig.py:457] Config param managed_mldiagnostics_run_group: 
+I0616 17:35:00.520335 138762116132864 pyconfig.py:457] Config param math_verify_num_procs: None
+I0616 17:35:00.520348 138762116132864 pyconfig.py:457] Config param math_verify_timeout: 300
+I0616 17:35:00.520368 138762116132864 pyconfig.py:457] Config param matmul_precision: MatmulPrecision.DEFAULT
+I0616 17:35:00.520385 138762116132864 pyconfig.py:457] Config param max_checkify: False
+I0616 17:35:00.520398 138762116132864 pyconfig.py:457] Config param max_concurrency: 256
+I0616 17:35:00.520411 138762116132864 pyconfig.py:457] Config param max_corpus_chars: 10000000
+I0616 17:35:00.520423 138762116132864 pyconfig.py:457] Config param max_num_batched_tokens: None
+I0616 17:35:00.520436 138762116132864 pyconfig.py:457] Config param max_num_checkpoints_to_keep: None
+I0616 17:35:00.520448 138762116132864 pyconfig.py:457] Config param max_num_images_per_example: -1
+I0616 17:35:00.520461 138762116132864 pyconfig.py:457] Config param max_num_seqs: None
+I0616 17:35:00.520474 138762116132864 pyconfig.py:457] Config param max_position_embeddings: 4096
+I0616 17:35:00.520487 138762116132864 pyconfig.py:457] Config param max_prefill_predict_length: 64
+I0616 17:35:00.520499 138762116132864 pyconfig.py:457] Config param max_sample_len_for_audio: 10000
+I0616 17:35:00.520512 138762116132864 pyconfig.py:457] Config param max_segments_per_seq: -1
+I0616 17:35:00.520524 138762116132864 pyconfig.py:457] Config param max_source_positions_for_audio: 1500
+I0616 17:35:00.520536 138762116132864 pyconfig.py:457] Config param max_target_length: 32
+I0616 17:35:00.520549 138762116132864 pyconfig.py:457] Config param max_timescale_for_audio: 10000.0
+I0616 17:35:00.520562 138762116132864 pyconfig.py:457] Config param megablox: False
+I0616 17:35:00.520575 138762116132864 pyconfig.py:457] Config param merge_gating_gmm: False
+I0616 17:35:00.520587 138762116132864 pyconfig.py:457] Config param mesh_axes: ['diloco', 'data', 'stage', 'fsdp', 'fsdp_transpose', 'context', 'context_autoregressive', 'tensor', 'tensor_transpose', 'tensor_sequence', 'expert', 'autoregressive']
+I0616 17:35:00.520601 138762116132864 pyconfig.py:457] Config param metrics_dir: /content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/metrics/
+I0616 17:35:00.520615 138762116132864 pyconfig.py:457] Config param metrics_file: 
+I0616 17:35:00.520627 138762116132864 pyconfig.py:457] Config param mhc_expansion_rate: 1
+I0616 17:35:00.520640 138762116132864 pyconfig.py:457] Config param micro_batch_size_to_eval_on: 1
+I0616 17:35:00.520652 138762116132864 pyconfig.py:457] Config param micro_batch_size_to_train_on: 1
+I0616 17:35:00.520665 138762116132864 pyconfig.py:457] Config param mla_kv: RematLocation.REMAT
+I0616 17:35:00.520678 138762116132864 pyconfig.py:457] Config param mla_naive_kvcache: True
+I0616 17:35:00.520690 138762116132864 pyconfig.py:457] Config param mla_q: RematLocation.REMAT
+I0616 17:35:00.520703 138762116132864 pyconfig.py:457] Config param mlp_activations: ['silu', 'linear']
+I0616 17:35:00.520717 138762116132864 pyconfig.py:457] Config param mlp_activations_limit: -1.0
+I0616 17:35:00.520729 138762116132864 pyconfig.py:457] Config param mlp_bias: False
+I0616 17:35:00.520742 138762116132864 pyconfig.py:457] Config param mlp_dim: 4096
+I0616 17:35:00.520755 138762116132864 pyconfig.py:457] Config param mlpwi: RematLocation.REMAT
+I0616 17:35:00.520767 138762116132864 pyconfig.py:457] Config param mlpwi_0: RematLocation.REMAT
+I0616 17:35:00.520780 138762116132864 pyconfig.py:457] Config param mlpwi_1: RematLocation.REMAT
+I0616 17:35:00.520793 138762116132864 pyconfig.py:457] Config param mlpwo: RematLocation.REMAT
+I0616 17:35:00.520806 138762116132864 pyconfig.py:457] Config param moba: False
+I0616 17:35:00.520818 138762116132864 pyconfig.py:457] Config param moba_chunk_size: 1024
+I0616 17:35:00.520831 138762116132864 pyconfig.py:457] Config param moba_topk: 8
+I0616 17:35:00.520844 138762116132864 pyconfig.py:457] Config param model_call_mode: 
+I0616 17:35:00.520856 138762116132864 pyconfig.py:457] Config param model_name: deepseek2-16b
+I0616 17:35:00.520869 138762116132864 pyconfig.py:457] Config param moe_expert_input_dim: -1
+I0616 17:35:00.520882 138762116132864 pyconfig.py:457] Config param moe_fsdp_use_two_stage_all_gather: False
+I0616 17:35:00.520894 138762116132864 pyconfig.py:457] Config param moe_mlp_dim: 768
+I0616 17:35:00.520907 138762116132864 pyconfig.py:457] Config param moe_mlpwi_0: RematLocation.REMAT
+I0616 17:35:00.520920 138762116132864 pyconfig.py:457] Config param moe_mlpwi_1: RematLocation.REMAT
+I0616 17:35:00.520933 138762116132864 pyconfig.py:457] Config param moe_mlpwo: RematLocation.REMAT
+I0616 17:35:00.520946 138762116132864 pyconfig.py:457] Config param monitor_goodput: False
+I0616 17:35:00.520958 138762116132864 pyconfig.py:457] Config param monitor_step_time_deviation: True
+I0616 17:35:00.520971 138762116132864 pyconfig.py:457] Config param mrope_section: [24, 20, 20]
+I0616 17:35:00.520984 138762116132864 pyconfig.py:457] Config param mscale: 0.707
+I0616 17:35:00.520997 138762116132864 pyconfig.py:457] Config param mtc_data_parallelism: 0
+I0616 17:35:00.521010 138762116132864 pyconfig.py:457] Config param mtp_eval_target_module: 0
+I0616 17:35:00.521022 138762116132864 pyconfig.py:457] Config param mtp_loss_scaling_factor: 0.1
+I0616 17:35:00.521035 138762116132864 pyconfig.py:457] Config param mtp_num_layers: 0
+I0616 17:35:00.521048 138762116132864 pyconfig.py:457] Config param mu_dtype: bfloat16
+I0616 17:35:00.521067 138762116132864 pyconfig.py:457] Config param multi_sampling: False
+I0616 17:35:00.521080 138762116132864 pyconfig.py:457] Config param multi_tier_checkpointing_backup_interval_minutes: 0
+I0616 17:35:00.521093 138762116132864 pyconfig.py:457] Config param muon_beta: 0.95
+I0616 17:35:00.521106 138762116132864 pyconfig.py:457] Config param muon_consistent_rms: None
+I0616 17:35:00.521119 138762116132864 pyconfig.py:457] Config param muon_weight_decay: 0.0
+I0616 17:35:00.521137 138762116132864 pyconfig.py:457] Config param n_routing_groups: -1
+I0616 17:35:00.521150 138762116132864 pyconfig.py:457] Config param n_window_for_audio: 50
+I0616 17:35:00.521162 138762116132864 pyconfig.py:457] Config param n_window_infer_for_audio: 800
+I0616 17:35:00.521175 138762116132864 pyconfig.py:457] Config param nope_layer_interval: -1
+I0616 17:35:00.521188 138762116132864 pyconfig.py:457] Config param norm_topk_prob: False
+I0616 17:35:00.521200 138762116132864 pyconfig.py:457] Config param normalization_layer_epsilon: 1e-06
+I0616 17:35:00.521214 138762116132864 pyconfig.py:457] Config param normalize_embedding_logits: True
+I0616 17:35:00.521228 138762116132864 pyconfig.py:457] Config param num_attention_heads_for_vit: 16
+I0616 17:35:00.521240 138762116132864 pyconfig.py:457] Config param num_batches: 4
+I0616 17:35:00.521252 138762116132864 pyconfig.py:457] Config param num_channels_for_vit: 3
+I0616 17:35:00.521265 138762116132864 pyconfig.py:457] Config param num_conv_layers_for_audio: 3
+I0616 17:35:00.521277 138762116132864 pyconfig.py:457] Config param num_decoder_layers: 12
+I0616 17:35:00.521290 138762116132864 pyconfig.py:457] Config param num_diloco_replicas: 1
+I0616 17:35:00.521302 138762116132864 pyconfig.py:457] Config param num_epoch: 1
+I0616 17:35:00.521315 138762116132864 pyconfig.py:457] Config param num_eval_passes: 1
+I0616 17:35:00.521327 138762116132864 pyconfig.py:457] Config param num_experts: 8
+I0616 17:35:00.521339 138762116132864 pyconfig.py:457] Config param num_experts_per_tok: 2
+I0616 17:35:00.521358 138762116132864 pyconfig.py:457] Config param num_generations: 2
+I0616 17:35:00.521371 138762116132864 pyconfig.py:457] Config param num_hidden_layers_for_vit: 34
+I0616 17:35:00.521384 138762116132864 pyconfig.py:457] Config param num_iterations: 1
+I0616 17:35:00.521397 138762116132864 pyconfig.py:457] Config param num_kv_heads: 8
+I0616 17:35:00.521409 138762116132864 pyconfig.py:457] Config param num_layers_per_pipeline_stage: 1
+I0616 17:35:00.521422 138762116132864 pyconfig.py:457] Config param num_mel_bins_for_audio: 128
+I0616 17:35:00.521434 138762116132864 pyconfig.py:457] Config param num_pipeline_microbatches: -1
+I0616 17:35:00.521446 138762116132864 pyconfig.py:457] Config param num_pipeline_repeats: -1
+I0616 17:35:00.521457 138762116132864 pyconfig.py:457] Config param num_position_embeddings_for_vit: 1024
+I0616 17:35:00.521470 138762116132864 pyconfig.py:457] Config param num_query_heads: 8
+I0616 17:35:00.521482 138762116132864 pyconfig.py:457] Config param num_samplers_slices: -1
+I0616 17:35:00.521495 138762116132864 pyconfig.py:457] Config param num_slices: 1
+I0616 17:35:00.521507 138762116132864 pyconfig.py:457] Config param num_target_devices: 1
+I0616 17:35:00.521520 138762116132864 pyconfig.py:457] Config param num_test_batches: 5
+I0616 17:35:00.521532 138762116132864 pyconfig.py:457] Config param num_trainer_slices: -1
+I0616 17:35:00.521544 138762116132864 pyconfig.py:457] Config param num_vocab_tiling: 1
+I0616 17:35:00.521557 138762116132864 pyconfig.py:457] Config param off_policy_steps: 0
+I0616 17:35:00.521569 138762116132864 pyconfig.py:457] Config param offline_data_dir: None
+I0616 17:35:00.521582 138762116132864 pyconfig.py:457] Config param olmo_apply_ngram_filter: True
+I0616 17:35:00.521594 138762116132864 pyconfig.py:457] Config param olmo_index_path: 
+I0616 17:35:00.521607 138762116132864 pyconfig.py:457] Config param olmo_path_remap_from: 
+I0616 17:35:00.521620 138762116132864 pyconfig.py:457] Config param olmo_path_remap_to: 
+I0616 17:35:00.521632 138762116132864 pyconfig.py:457] Config param opt_type: OptimizerType.ADAMW
+I0616 17:35:00.521647 138762116132864 pyconfig.py:457] Config param optimize_mesh_for_tpu_v6e: False
+I0616 17:35:00.521659 138762116132864 pyconfig.py:457] Config param optimizer_memory_host_offload: False
+I0616 17:35:00.521672 138762116132864 pyconfig.py:457] Config param original_max_position_embeddings: 4096
+I0616 17:35:00.521684 138762116132864 pyconfig.py:457] Config param out_hidden_size_for_vit: 512
+I0616 17:35:00.521697 138762116132864 pyconfig.py:457] Config param out_proj: RematLocation.REMAT
+I0616 17:35:00.521710 138762116132864 pyconfig.py:457] Config param output_dim_for_audio: 512
+I0616 17:35:00.521722 138762116132864 pyconfig.py:457] Config param override_logical_axis_rules: False
+I0616 17:35:00.521735 138762116132864 pyconfig.py:457] Config param override_model_config: True
+I0616 17:35:00.521747 138762116132864 pyconfig.py:457] Config param packing: True
+I0616 17:35:00.521759 138762116132864 pyconfig.py:457] Config param padded_base_moe_mlp_dim: None
+I0616 17:35:00.521772 138762116132864 pyconfig.py:457] Config param pagedattn_head_dim_alignment: 128
+I0616 17:35:00.521784 138762116132864 pyconfig.py:457] Config param pagedattn_max_pages_per_group: -1
+I0616 17:35:00.521797 138762116132864 pyconfig.py:457] Config param pagedattn_num_pages: 64
+I0616 17:35:00.521809 138762116132864 pyconfig.py:457] Config param pagedattn_pages_per_compute_block: 4
+I0616 17:35:00.521822 138762116132864 pyconfig.py:457] Config param pagedattn_tokens_per_page: 32
+I0616 17:35:00.521835 138762116132864 pyconfig.py:457] Config param param_scan_axis: 1
+I0616 17:35:00.521847 138762116132864 pyconfig.py:457] Config param parameter_memory_host_offload: False
+I0616 17:35:00.521860 138762116132864 pyconfig.py:457] Config param partial_rotary_factor: 1.0
+I0616 17:35:00.521873 138762116132864 pyconfig.py:457] Config param patch_size_for_vit: 14
+I0616 17:35:00.521885 138762116132864 pyconfig.py:457] Config param penalty_incorrect_answer: -1.0
+I0616 17:35:00.521898 138762116132864 pyconfig.py:457] Config param penalty_incorrect_format: -0.5
+I0616 17:35:00.521911 138762116132864 pyconfig.py:457] Config param per_device_batch_size: 1
+I0616 17:35:00.521924 138762116132864 pyconfig.py:457] Config param per_device_batch_size_increment: 2.0
+I0616 17:35:00.521936 138762116132864 pyconfig.py:457] Config param per_device_batch_size_start: 4.0
+I0616 17:35:00.521949 138762116132864 pyconfig.py:457] Config param pipeline_delay_activation_forwarding: False
+I0616 17:35:00.521961 138762116132864 pyconfig.py:457] Config param pipeline_fsdp_ag_once: False
+I0616 17:35:00.521974 138762116132864 pyconfig.py:457] Config param pipeline_fsdp_ag_per_repeat: False
+I0616 17:35:00.521986 138762116132864 pyconfig.py:457] Config param pipeline_parallel_layers: 10
+I0616 17:35:00.521999 138762116132864 pyconfig.py:457] Config param pixel_shuffle_ratio_for_vit: 0.5
+I0616 17:35:00.522012 138762116132864 pyconfig.py:457] Config param posemb_type_for_vit: learn
+I0616 17:35:00.522024 138762116132864 pyconfig.py:457] Config param position_id_per_seconds: 25
+I0616 17:35:00.522037 138762116132864 pyconfig.py:457] Config param prefill_cache_axis_order: 1,2,0,3
+I0616 17:35:00.522049 138762116132864 pyconfig.py:457] Config param prefill_cache_dir: 
+I0616 17:35:00.522061 138762116132864 pyconfig.py:457] Config param prefill_chunk_size: 256
+I0616 17:35:00.522073 138762116132864 pyconfig.py:457] Config param prefill_slice: v5e-16
+I0616 17:35:00.522086 138762116132864 pyconfig.py:457] Config param prefix_caching_dram_byte: 100000000000
+I0616 17:35:00.522098 138762116132864 pyconfig.py:457] Config param prefix_caching_hbm_byte: 10000000000
+I0616 17:35:00.522110 138762116132864 pyconfig.py:457] Config param prefuse_moe_weights: False
+I0616 17:35:00.522123 138762116132864 pyconfig.py:457] Config param profile_cleanly: True
+I0616 17:35:00.522138 138762116132864 pyconfig.py:457] Config param profile_periodically_period: -1
+I0616 17:35:00.522151 138762116132864 pyconfig.py:457] Config param profile_power_events: False
+I0616 17:35:00.522163 138762116132864 pyconfig.py:457] Config param profiler: ProfilerType.NONE
+I0616 17:35:00.522178 138762116132864 pyconfig.py:457] Config param profiler_steps: 5
+I0616 17:35:00.522191 138762116132864 pyconfig.py:457] Config param projector_dropout_for_vit: 0.0
+I0616 17:35:00.522204 138762116132864 pyconfig.py:457] Config param projector_input_dim_for_vit: 4096
+I0616 17:35:00.522216 138762116132864 pyconfig.py:457] Config param projector_output_dim_for_vit: 4096
+I0616 17:35:00.522228 138762116132864 pyconfig.py:457] Config param prometheus_port: 0
+I0616 17:35:00.522241 138762116132864 pyconfig.py:457] Config param prompt: I love to
+I0616 17:35:00.522255 138762116132864 pyconfig.py:457] Config param pure_nnx: False
+I0616 17:35:00.522267 138762116132864 pyconfig.py:457] Config param pure_nnx_decoder: False
+I0616 17:35:00.522280 138762116132864 pyconfig.py:457] Config param q_lora_rank: 0
+I0616 17:35:00.522293 138762116132864 pyconfig.py:457] Config param qk_clip_threshold: 100.0
+I0616 17:35:00.522305 138762116132864 pyconfig.py:457] Config param qk_nope_head_dim: 64
+I0616 17:35:00.522318 138762116132864 pyconfig.py:457] Config param qk_norm_with_scale: True
+I0616 17:35:00.522330 138762116132864 pyconfig.py:457] Config param qk_rope_head_dim: 32
+I0616 17:35:00.522343 138762116132864 pyconfig.py:457] Config param qkv_proj: RematLocation.REMAT
+I0616 17:35:00.522362 138762116132864 pyconfig.py:457] Config param quant_cfg_path: 
+I0616 17:35:00.522377 138762116132864 pyconfig.py:457] Config param quantization: QuantizationType.NONE
+I0616 17:35:00.522393 138762116132864 pyconfig.py:457] Config param quantization_local_shard_count: 1
+I0616 17:35:00.522406 138762116132864 pyconfig.py:457] Config param quantize_kvcache: False
+I0616 17:35:00.522418 138762116132864 pyconfig.py:457] Config param query_proj: RematLocation.REMAT
+I0616 17:35:00.522431 138762116132864 pyconfig.py:457] Config param query_wa_proj: RematLocation.REMAT
+I0616 17:35:00.522443 138762116132864 pyconfig.py:457] Config param ragged_block_size: 256
+I0616 17:35:00.522456 138762116132864 pyconfig.py:457] Config param ragged_buffer_factor: -1.0
+I0616 17:35:00.522468 138762116132864 pyconfig.py:457] Config param rampup_end_step: 0
+I0616 17:35:00.522481 138762116132864 pyconfig.py:457] Config param rampup_samples_per_increment_to_load: None
+I0616 17:35:00.522493 138762116132864 pyconfig.py:457] Config param reasoning_end_token: </reasoning>
+I0616 17:35:00.522506 138762116132864 pyconfig.py:457] Config param reasoning_start_token: <reasoning>
+I0616 17:35:00.522519 138762116132864 pyconfig.py:457] Config param record_internal_nn_metrics: 0
+I0616 17:35:00.522531 138762116132864 pyconfig.py:457] Config param remat_policy: full
+I0616 17:35:00.522543 138762116132864 pyconfig.py:457] Config param remat_policy_for_vit: minimal
+I0616 17:35:00.522555 138762116132864 pyconfig.py:457] Config param remove_size_one_mesh_axis_from_type: True
+I0616 17:35:00.522567 138762116132864 pyconfig.py:457] Config param replicate_quant_scale: False
+I0616 17:35:00.522580 138762116132864 pyconfig.py:457] Config param replicator_backup_interval_minutes: 0
+I0616 17:35:00.522593 138762116132864 pyconfig.py:457] Config param report_heartbeat_metric_for_gcp_monitoring: False
+I0616 17:35:00.522605 138762116132864 pyconfig.py:457] Config param report_performance_metric_for_gcp_monitoring: False
+I0616 17:35:00.522618 138762116132864 pyconfig.py:457] Config param reshape_q: False
+I0616 17:35:00.522631 138762116132864 pyconfig.py:457] Config param reshard_chunk_size: None
+I0616 17:35:00.522643 138762116132864 pyconfig.py:457] Config param return_log_prob: False
+I0616 17:35:00.522656 138762116132864 pyconfig.py:457] Config param reuse_example_batch: 0
+I0616 17:35:00.522669 138762116132864 pyconfig.py:457] Config param reward_exact_answer: 5.0
+I0616 17:35:00.522681 138762116132864 pyconfig.py:457] Config param reward_exact_format_match: 3.0
+I0616 17:35:00.522693 138762116132864 pyconfig.py:457] Config param reward_partial_format_match: 0.5
+I0616 17:35:00.522706 138762116132864 pyconfig.py:457] Config param reward_ratio_guess_to_answer_high: 0.5
+I0616 17:35:00.522719 138762116132864 pyconfig.py:457] Config param reward_ratio_guess_to_answer_low: 0.25
+I0616 17:35:00.522732 138762116132864 pyconfig.py:457] Config param reward_white_space_format_match: 1.5
+I0616 17:35:00.522745 138762116132864 pyconfig.py:457] Config param rl: {'num_generations': 2, 'num_iterations': 1, 'grpo_beta': 0.08, 'grpo_epsilon': 0.2, 'loss_algo': 'grpo', 'use_agentic_rollout': False, 'max_concurrency': 256, 'off_policy_steps': 0, 'system_prompt': '', 'degenerate_group_masking': True, 'epsilon_high': None, 'reshard_chunk_size': None}
+I0616 17:35:00.522762 138762116132864 pyconfig.py:457] Config param rollout_data_parallelism: -1
+I0616 17:35:00.522774 138762116132864 pyconfig.py:457] Config param rollout_expert_parallelism: 1
+I0616 17:35:00.522787 138762116132864 pyconfig.py:457] Config param rollout_micro_batch_size: -1
+I0616 17:35:00.522799 138762116132864 pyconfig.py:457] Config param rollout_tensor_parallelism: -1
+I0616 17:35:00.522812 138762116132864 pyconfig.py:457] Config param rope_attention_scaling: False
+I0616 17:35:00.522825 138762116132864 pyconfig.py:457] Config param rope_factor: 1
+I0616 17:35:00.522837 138762116132864 pyconfig.py:457] Config param rope_interleave: True
+I0616 17:35:00.522850 138762116132864 pyconfig.py:457] Config param rope_linear_scaling_factor: 1.0
+I0616 17:35:00.522862 138762116132864 pyconfig.py:457] Config param rope_max_timescale: 10000
+I0616 17:35:00.522875 138762116132864 pyconfig.py:457] Config param rope_min_timescale: 1
+I0616 17:35:00.522888 138762116132864 pyconfig.py:457] Config param rope_theta_for_vit: 10000
+I0616 17:35:00.522900 138762116132864 pyconfig.py:457] Config param rope_truncate: True
+I0616 17:35:00.522912 138762116132864 pyconfig.py:457] Config param rope_type: RopeType.YARN
+I0616 17:35:00.522928 138762116132864 pyconfig.py:457] Config param rope_use_scale: True
+I0616 17:35:00.522941 138762116132864 pyconfig.py:457] Config param routed_bias: False
+I0616 17:35:00.522953 138762116132864 pyconfig.py:457] Config param routed_bias_update_rate: 0.0
+I0616 17:35:00.522966 138762116132864 pyconfig.py:457] Config param routed_scaling_factor: 1.0
+I0616 17:35:00.522979 138762116132864 pyconfig.py:457] Config param routed_score_func: softmax
+I0616 17:35:00.522991 138762116132864 pyconfig.py:457] Config param run_name: moe_deepseek_under_1b_tpu
+I0616 17:35:00.523004 138762116132864 pyconfig.py:457] Config param sa_block_kv: 512
+I0616 17:35:00.523016 138762116132864 pyconfig.py:457] Config param sa_block_kv_compute: 512
+I0616 17:35:00.523028 138762116132864 pyconfig.py:457] Config param sa_block_kv_dkv: 512
+I0616 17:35:00.523041 138762116132864 pyconfig.py:457] Config param sa_block_kv_dkv_compute: 512
+I0616 17:35:00.523053 138762116132864 pyconfig.py:457] Config param sa_block_kv_dq: 512
+I0616 17:35:00.523065 138762116132864 pyconfig.py:457] Config param sa_block_q: 512
+I0616 17:35:00.523078 138762116132864 pyconfig.py:457] Config param sa_block_q_dkv: 512
+I0616 17:35:00.523090 138762116132864 pyconfig.py:457] Config param sa_block_q_dq: 512
+I0616 17:35:00.523102 138762116132864 pyconfig.py:457] Config param sa_k_layout: HEAD_DIM_MINOR
+I0616 17:35:00.523115 138762116132864 pyconfig.py:457] Config param sa_q_layout: HEAD_DIM_MINOR
+I0616 17:35:00.523127 138762116132864 pyconfig.py:457] Config param sa_use_fused_bwd_kernel: False
+I0616 17:35:00.523143 138762116132864 pyconfig.py:457] Config param sa_v_layout: HEAD_DIM_MINOR
+I0616 17:35:00.523155 138762116132864 pyconfig.py:457] Config param sampler_devices_fraction: 0.5
+I0616 17:35:00.523168 138762116132864 pyconfig.py:457] Config param save_checkpoint_on_completion: False
+I0616 17:35:00.523181 138762116132864 pyconfig.py:457] Config param save_config_to_gcs: False
+I0616 17:35:00.523193 138762116132864 pyconfig.py:457] Config param save_quantized_params_path: 
+I0616 17:35:00.523206 138762116132864 pyconfig.py:457] Config param scale_embedding_for_audio: True
+I0616 17:35:00.523218 138762116132864 pyconfig.py:457] Config param scan_layers: True
+I0616 17:35:00.523231 138762116132864 pyconfig.py:457] Config param scan_layers_per_stage: False
+I0616 17:35:00.523243 138762116132864 pyconfig.py:457] Config param scan_pipeline_iterations: True
+I0616 17:35:00.523256 138762116132864 pyconfig.py:457] Config param scan_pipeline_repeats: False
+I0616 17:35:00.523268 138762116132864 pyconfig.py:457] Config param set_remat_policy_on_layers_per_stage: False
+I0616 17:35:00.523280 138762116132864 pyconfig.py:457] Config param set_remat_policy_on_pipeline_iterations: True
+I0616 17:35:00.523293 138762116132864 pyconfig.py:457] Config param sft_train_on_completion_only: False
+I0616 17:35:00.523305 138762116132864 pyconfig.py:457] Config param shard_exp_on_fsdp: False
+I0616 17:35:00.523318 138762116132864 pyconfig.py:457] Config param shard_mode: ShardMode.AUTO
+I0616 17:35:00.523332 138762116132864 pyconfig.py:457] Config param shard_optimizer_over_data: False
+I0616 17:35:00.523345 138762116132864 pyconfig.py:457] Config param sharding_strategy: None
+I0616 17:35:00.523363 138762116132864 pyconfig.py:457] Config param sharding_tolerance: 0.02
+I0616 17:35:00.523376 138762116132864 pyconfig.py:457] Config param shardy: True
+I0616 17:35:00.523392 138762116132864 pyconfig.py:457] Config param share_kv_projections: False
+I0616 17:35:00.523404 138762116132864 pyconfig.py:457] Config param shared_experts: 1
+I0616 17:35:00.523419 138762116132864 pyconfig.py:457] Config param sinkhorn_iterations: 20
+I0616 17:35:00.523432 138762116132864 pyconfig.py:457] Config param skip_first_n_steps_for_profiler: 1
+I0616 17:35:00.523444 138762116132864 pyconfig.py:457] Config param skip_jax_distributed_system: True
+I0616 17:35:00.523457 138762116132864 pyconfig.py:457] Config param skip_step_interval: 128
+I0616 17:35:00.523470 138762116132864 pyconfig.py:457] Config param skip_step_on_spikes: False
+I0616 17:35:00.523483 138762116132864 pyconfig.py:457] Config param skip_step_scaling_factor: 6.0
+I0616 17:35:00.523496 138762116132864 pyconfig.py:457] Config param sliding_window_size: 0
+I0616 17:35:00.523509 138762116132864 pyconfig.py:457] Config param solution_end_token: </answer>
+I0616 17:35:00.523522 138762116132864 pyconfig.py:457] Config param solution_start_token: <answer>
+I0616 17:35:00.523535 138762116132864 pyconfig.py:457] Config param source_checkpoint_layout: orbax
+I0616 17:35:00.523547 138762116132864 pyconfig.py:457] Config param sparse_matmul: False
+I0616 17:35:00.523561 138762116132864 pyconfig.py:457] Config param spatial_merge_size_for_vit: 2
+I0616 17:35:00.523573 138762116132864 pyconfig.py:457] Config param stack_prefill_result_cache: False
+I0616 17:35:00.523586 138762116132864 pyconfig.py:457] Config param stack_trace_interval_seconds: 600
+I0616 17:35:00.523598 138762116132864 pyconfig.py:457] Config param stack_trace_to_cloud: False
+I0616 17:35:00.523611 138762116132864 pyconfig.py:457] Config param step_deviation_interval_seconds: 30
+I0616 17:35:00.523624 138762116132864 pyconfig.py:457] Config param steps: 50
+I0616 17:35:00.523637 138762116132864 pyconfig.py:457] Config param stop_strings: None
+I0616 17:35:00.523650 138762116132864 pyconfig.py:457] Config param student_overrides: {}
+I0616 17:35:00.523663 138762116132864 pyconfig.py:457] Config param student_params_to_update: None
+I0616 17:35:00.523675 138762116132864 pyconfig.py:457] Config param subslice_shape: 
+I0616 17:35:00.523688 138762116132864 pyconfig.py:457] Config param swap_space_vllm_gb: 2
+I0616 17:35:00.523700 138762116132864 pyconfig.py:457] Config param system_prompt: 
+I0616 17:35:00.523713 138762116132864 pyconfig.py:457] Config param target_eval_loss: 0.0
+I0616 17:35:00.523725 138762116132864 pyconfig.py:457] Config param teacher_overrides: {}
+I0616 17:35:00.523738 138762116132864 pyconfig.py:457] Config param temperature_tuning: False
+I0616 17:35:00.523751 138762116132864 pyconfig.py:457] Config param temporal_patch_size_for_vit: 2
+I0616 17:35:00.523763 138762116132864 pyconfig.py:457] Config param tensorboard_dir: /content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/
+I0616 17:35:00.523776 138762116132864 pyconfig.py:457] Config param tensors_on_device: None
+I0616 17:35:00.523788 138762116132864 pyconfig.py:457] Config param tensors_to_offload: None
+I0616 17:35:00.523801 138762116132864 pyconfig.py:457] Config param test_batch_start_index: 0
+I0616 17:35:00.523813 138762116132864 pyconfig.py:457] Config param tile_size_for_vit: 336
+I0616 17:35:00.523825 138762116132864 pyconfig.py:457] Config param tokenize_eval_data: True
+I0616 17:35:00.523838 138762116132864 pyconfig.py:457] Config param tokenize_train_data: True
+I0616 17:35:00.523851 138762116132864 pyconfig.py:457] Config param tokenizer_path: deepseek-ai/DeepSeek-V2-Lite
+I0616 17:35:00.523863 138762116132864 pyconfig.py:457] Config param tokenizer_type: TokenizerType.SENTENCEPIECE
+I0616 17:35:00.523877 138762116132864 pyconfig.py:457] Config param topk_routing_group: -1
+I0616 17:35:00.523890 138762116132864 pyconfig.py:457] Config param tpu_num_chips_to_profile_per_task: 1
+I0616 17:35:00.523903 138762116132864 pyconfig.py:457] Config param tpu_num_sparse_core_tiles_to_trace: 1
+I0616 17:35:00.523915 138762116132864 pyconfig.py:457] Config param tpu_num_sparse_cores_to_trace: 2
+I0616 17:35:00.523928 138762116132864 pyconfig.py:457] Config param train_data_columns: ['text']
+I0616 17:35:00.523941 138762116132864 pyconfig.py:457] Config param train_fraction: 1.0
+I0616 17:35:00.523954 138762116132864 pyconfig.py:457] Config param train_image_column: image
+I0616 17:35:00.523966 138762116132864 pyconfig.py:457] Config param train_micro_batch_size: -1
+I0616 17:35:00.523979 138762116132864 pyconfig.py:457] Config param train_split: train
+I0616 17:35:00.523991 138762116132864 pyconfig.py:457] Config param trainable_parameters_mask: []
+I0616 17:35:00.524004 138762116132864 pyconfig.py:457] Config param trainable_position_size: -1
+I0616 17:35:00.524016 138762116132864 pyconfig.py:457] Config param trainer_devices_fraction: 0.5
+I0616 17:35:00.524030 138762116132864 pyconfig.py:457] Config param upload_all_profiler_results: False
+I0616 17:35:00.524043 138762116132864 pyconfig.py:457] Config param use_2d_fsdp_sharding: False
+I0616 17:35:00.524055 138762116132864 pyconfig.py:457] Config param use_agentic_rollout: False
+I0616 17:35:00.524067 138762116132864 pyconfig.py:457] Config param use_audio: False
+I0616 17:35:00.524080 138762116132864 pyconfig.py:457] Config param use_audio_in_video: False
+I0616 17:35:00.524092 138762116132864 pyconfig.py:457] Config param use_batch_split_schedule: False
+I0616 17:35:00.524104 138762116132864 pyconfig.py:457] Config param use_chat_template: False
+I0616 17:35:00.524117 138762116132864 pyconfig.py:457] Config param use_chunked_prefill: False
+I0616 17:35:00.524129 138762116132864 pyconfig.py:457] Config param use_custom_sort_vjp: True
+I0616 17:35:00.524145 138762116132864 pyconfig.py:457] Config param use_dpo: False
+I0616 17:35:00.524158 138762116132864 pyconfig.py:457] Config param use_gather_mosaic_kernel: False
+I0616 17:35:00.524170 138762116132864 pyconfig.py:457] Config param use_grpo: True
+I0616 17:35:00.524182 138762116132864 pyconfig.py:457] Config param use_indexer: False
+I0616 17:35:00.524195 138762116132864 pyconfig.py:457] Config param use_iota_embed: False
+I0616 17:35:00.524207 138762116132864 pyconfig.py:457] Config param use_jax_splash: False
+I0616 17:35:00.524220 138762116132864 pyconfig.py:457] Config param use_manual_quantization: False
+I0616 17:35:00.524233 138762116132864 pyconfig.py:457] Config param use_max_logit_estimate: -1
+I0616 17:35:00.524245 138762116132864 pyconfig.py:457] Config param use_mrope: False
+I0616 17:35:00.524258 138762116132864 pyconfig.py:457] Config param use_multimodal: False
+I0616 17:35:00.524270 138762116132864 pyconfig.py:457] Config param use_pathways: True
+I0616 17:35:00.524282 138762116132864 pyconfig.py:457] Config param use_post_attn_norm: False
+I0616 17:35:00.524295 138762116132864 pyconfig.py:457] Config param use_post_ffw_norm: False
+I0616 17:35:00.524307 138762116132864 pyconfig.py:457] Config param use_qk_clip: False
+I0616 17:35:00.524319 138762116132864 pyconfig.py:457] Config param use_qk_norm: False
+I0616 17:35:00.524332 138762116132864 pyconfig.py:457] Config param use_qk_norm_in_gdn: True
+I0616 17:35:00.524345 138762116132864 pyconfig.py:457] Config param use_qwix_quantization: False
+I0616 17:35:00.524364 138762116132864 pyconfig.py:457] Config param use_ragged_attention: False
+I0616 17:35:00.524377 138762116132864 pyconfig.py:457] Config param use_random_routing: False
+I0616 17:35:00.524391 138762116132864 pyconfig.py:457] Config param use_replicator_service: False
+I0616 17:35:00.524403 138762116132864 pyconfig.py:457] Config param use_ring_of_experts: False
+I0616 17:35:00.524416 138762116132864 pyconfig.py:457] Config param use_sft: False
+I0616 17:35:00.524428 138762116132864 pyconfig.py:457] Config param use_splash_scheduler: False
+I0616 17:35:00.524441 138762116132864 pyconfig.py:457] Config param use_standalone_converter: False
+I0616 17:35:00.524453 138762116132864 pyconfig.py:457] Config param use_tokamax_gmm: False
+I0616 17:35:00.524466 138762116132864 pyconfig.py:457] Config param use_tokamax_splash: False
+I0616 17:35:00.524478 138762116132864 pyconfig.py:457] Config param use_truncation: True
+I0616 17:35:00.524491 138762116132864 pyconfig.py:457] Config param use_tunix_gradient_accumulation: False
+I0616 17:35:00.524503 138762116132864 pyconfig.py:457] Config param use_untrainable_positional_embedding: False
+I0616 17:35:00.524515 138762116132864 pyconfig.py:457] Config param use_vertex_tensorboard: False
+I0616 17:35:00.524528 138762116132864 pyconfig.py:457] Config param using_pipeline_parallelism: False
+I0616 17:35:00.524541 138762116132864 pyconfig.py:457] Config param v_head_dim: 128
+I0616 17:35:00.524553 138762116132864 pyconfig.py:457] Config param v_norm_with_scale: True
+I0616 17:35:00.524566 138762116132864 pyconfig.py:457] Config param value_proj: RematLocation.REMAT
+I0616 17:35:00.524579 138762116132864 pyconfig.py:457] Config param vertex_tensorboard_project: 
+I0616 17:35:00.524591 138762116132864 pyconfig.py:457] Config param vertex_tensorboard_region: 
+I0616 17:35:00.524604 138762116132864 pyconfig.py:457] Config param video_path: 
+I0616 17:35:00.524616 138762116132864 pyconfig.py:457] Config param video_placeholder: <|video|>
+I0616 17:35:00.524629 138762116132864 pyconfig.py:457] Config param vision_output_dim_for_vit: 4096
+I0616 17:35:00.524641 138762116132864 pyconfig.py:457] Config param vision_output_length: -1
+I0616 17:35:00.524654 138762116132864 pyconfig.py:457] Config param vllm_additional_config: {}
+I0616 17:35:00.524667 138762116132864 pyconfig.py:457] Config param vllm_hf_config_path: 
+I0616 17:35:00.524679 138762116132864 pyconfig.py:457] Config param vllm_hf_overrides: {}
+I0616 17:35:00.524692 138762116132864 pyconfig.py:457] Config param vllm_load_format: dummy
+I0616 17:35:00.524704 138762116132864 pyconfig.py:457] Config param vocab_size: 102400
+I0616 17:35:00.524717 138762116132864 pyconfig.py:457] Config param warmup_steps_fraction: 0.1
+I0616 17:35:00.524729 138762116132864 pyconfig.py:457] Config param weight_dtype: bfloat16
+I0616 17:35:00.524746 138762116132864 pyconfig.py:457] Config param weight_quantization_calibration_method: absmax
+I0616 17:35:00.524759 138762116132864 pyconfig.py:457] Config param weight_sparsity_m: None
+I0616 17:35:00.524771 138762116132864 pyconfig.py:457] Config param weight_sparsity_n: None
+I0616 17:35:00.524784 138762116132864 pyconfig.py:457] Config param weight_sparsity_start_step: 50
+I0616 17:35:00.524797 138762116132864 pyconfig.py:457] Config param weight_sparsity_update_step: 10
+I0616 17:35:00.524809 138762116132864 pyconfig.py:457] Config param wi_tile_dlhs_batch_seq: 512
+I0616 17:35:00.524822 138762116132864 pyconfig.py:457] Config param wi_tile_dlhs_embed_dim: 1024
+I0616 17:35:00.524835 138762116132864 pyconfig.py:457] Config param wi_tile_dlhs_mlp_dim: 1024
+I0616 17:35:00.524848 138762116132864 pyconfig.py:457] Config param wi_tile_drhs_batch_seq: 512
+I0616 17:35:00.524861 138762116132864 pyconfig.py:457] Config param wi_tile_drhs_embed_dim: 1024
+I0616 17:35:00.524874 138762116132864 pyconfig.py:457] Config param wi_tile_drhs_mlp_dim: 1024
+I0616 17:35:00.524886 138762116132864 pyconfig.py:457] Config param wi_tile_fwd_batch_seq: 512
+I0616 17:35:00.524899 138762116132864 pyconfig.py:457] Config param wi_tile_fwd_embed_dim: 1024
+I0616 17:35:00.524911 138762116132864 pyconfig.py:457] Config param wi_tile_fwd_mlp_dim: 1024
+I0616 17:35:00.524924 138762116132864 pyconfig.py:457] Config param wo_tile_dlhs_batch_seq: 512
+I0616 17:35:00.524936 138762116132864 pyconfig.py:457] Config param wo_tile_dlhs_embed_dim: 1024
+I0616 17:35:00.524949 138762116132864 pyconfig.py:457] Config param wo_tile_dlhs_mlp_dim: 1024
+I0616 17:35:00.524961 138762116132864 pyconfig.py:457] Config param wo_tile_drhs_batch_seq: 512
+I0616 17:35:00.524974 138762116132864 pyconfig.py:457] Config param wo_tile_drhs_embed_dim: 1024
+I0616 17:35:00.524986 138762116132864 pyconfig.py:457] Config param wo_tile_drhs_mlp_dim: 1024
+I0616 17:35:00.524999 138762116132864 pyconfig.py:457] Config param wo_tile_fwd_batch_seq: 512
+I0616 17:35:00.525012 138762116132864 pyconfig.py:457] Config param wo_tile_fwd_embed_dim: 1024
+I0616 17:35:00.525024 138762116132864 pyconfig.py:457] Config param wo_tile_fwd_mlp_dim: 1024
+I0616 17:35:00.525036 138762116132864 pyconfig.py:457] Config param wsd_decay_steps_fraction: 0.1
+I0616 17:35:00.525049 138762116132864 pyconfig.py:457] Config param wsd_decay_style: WsdDecayStyle.LINEAR
+I0616 17:35:00.525063 138762116132864 pyconfig.py:457] Config param xprof_e2e_enable_fw_power_level_event: False
+I0616 17:35:00.525076 138762116132864 pyconfig.py:457] Config param xprof_e2e_enable_fw_thermal_event: False
+I0616 17:35:00.525088 138762116132864 pyconfig.py:457] Config param xprof_e2e_enable_fw_throttle_event: False
+I0616 17:35:00.525101 138762116132864 pyconfig.py:457] Config param xprof_tpu_power_trace_level: 0
+I0616 17:35:00.525115 138762116132864 pyconfig.py:457] Config param z_loss_multiplier: 0.0
+I0616 17:35:00.525448 138762116132864 max_utils.py:804] System Information: Jax Version: 0.9.2
+I0616 17:35:00.525483 138762116132864 max_utils.py:805] System Information: Jaxlib Version: 0.9.2
+I0616 17:35:00.525514 138762116132864 max_utils.py:806] System Information: Jax Backend: PJRT C API
+TFRT TPU v6 lite
+Built on Mar 18 2026 23:22:47 (1773901367) cl/885286250
+I0616 17:35:00.525538 138762116132864 train_utils.py:350] WARNING: 'base_output_directory' might be pointing your local file system
+I0616 17:35:00.525558 138762116132864 train_utils.py:361] WARNING: Sequence packing is essentially ignored for synthetic data. Please use a real dataset to use sequence packing.
+I0616 17:35:00.525631 138762116132864 train.py:718] [DECOUPLED NO-OP] skipping cloud diagnostics wrapper.
+I0616 17:35:01.000375 138762116132864 maxtext_utils.py:1655] Num_devices: 1, shape (1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+I0616 17:35:01.000643 138762116132864 checkpointing.py:716] Setting up checkpoint logger...
+I0616 17:35:01.000693 138762116132864 checkpointing.py:254] Checkpointing disabled, not creating checkpoint manager.
+I0616 17:35:01.488850 138762116132864 checkpointing.py:704] No existing checkpoints found, not restoring checkpoint.
+I0616 17:35:09.876907 138762116132864 max_utils.py:795] Total memory size: 3.7 GB, Output size: 2.7 GB, Temp size: 1.0 GB, Argument size: 2.7 GB, Host temp size: 0.0 GB.
+I0616 17:35:09.877479 138762116132864 max_utils.py:199] tensorboardX not available; using no-op SummaryWriter.
+I0616 17:35:09.877714 138762116132864 metric_logger.py:303] number parameters: 0.478 billion
+I0616 17:35:16.007041 138762116132864 max_utils.py:754] 
+Memstats: After params initialized:
+I0616 17:35:16.007170 138762116132864 max_utils.py:760] 	Using (GB) 2.69 / 31.25 (8.608000%) on TPU_0(process=0,(0,0,0,0))
+I0616 17:35:16.292389 138762116132864 metric_logger.py:196] completed step: 0, seconds: 6.129, TFLOP/s/device: 0.007, Tokens/s/device: 5.221, total_weights: 32, loss: 12.132, lm_loss: 12.132, perplexity: 185759.016, moe_lb_loss: 0.000
+I0616 17:35:16.293235 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.302418 138762116132864 metric_logger.py:196] completed step: 1, seconds: 0.285, TFLOP/s/device: 0.156, Tokens/s/device: 112.450, total_weights: 32, loss: 12.132, lm_loss: 12.132, perplexity: 185759.016, moe_lb_loss: 0.000
+I0616 17:35:16.303161 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.312576 138762116132864 metric_logger.py:196] completed step: 2, seconds: 0.003, TFLOP/s/device: 13.478, Tokens/s/device: 9702.850, total_weights: 32, loss: 12.086, lm_loss: 12.086, perplexity: 177350.641, moe_lb_loss: 0.000
+I0616 17:35:16.313286 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.322671 138762116132864 metric_logger.py:196] completed step: 3, seconds: 0.010, TFLOP/s/device: 4.431, Tokens/s/device: 3190.111, total_weights: 32, loss: 11.894, lm_loss: 11.894, perplexity: 146422.391, moe_lb_loss: 0.000
+I0616 17:35:16.323383 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.332852 138762116132864 metric_logger.py:196] completed step: 4, seconds: 0.010, TFLOP/s/device: 4.430, Tokens/s/device: 3189.157, total_weights: 32, loss: 11.289, lm_loss: 11.289, perplexity: 79906.227, moe_lb_loss: 0.000
+I0616 17:35:16.333577 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.342927 138762116132864 metric_logger.py:196] completed step: 5, seconds: 0.010, TFLOP/s/device: 4.382, Tokens/s/device: 3154.885, total_weights: 32, loss: 10.573, lm_loss: 10.573, perplexity: 39071.008, moe_lb_loss: 0.000
+I0616 17:35:16.343644 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.353052 138762116132864 metric_logger.py:196] completed step: 6, seconds: 0.010, TFLOP/s/device: 4.368, Tokens/s/device: 3144.345, total_weights: 32, loss: 9.851, lm_loss: 9.851, perplexity: 18974.746, moe_lb_loss: 0.000
+I0616 17:35:16.353741 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.363219 138762116132864 metric_logger.py:196] completed step: 7, seconds: 0.010, TFLOP/s/device: 4.414, Tokens/s/device: 3177.756, total_weights: 32, loss: 9.172, lm_loss: 9.172, perplexity: 9621.188, moe_lb_loss: 0.000
+I0616 17:35:16.363920 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.373380 138762116132864 metric_logger.py:196] completed step: 8, seconds: 0.010, TFLOP/s/device: 4.371, Tokens/s/device: 3146.509, total_weights: 32, loss: 8.532, lm_loss: 8.532, perplexity: 5076.391, moe_lb_loss: 0.000
+I0616 17:35:16.374078 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.383524 138762116132864 metric_logger.py:196] completed step: 9, seconds: 0.010, TFLOP/s/device: 4.371, Tokens/s/device: 3146.509, total_weights: 32, loss: 7.924, lm_loss: 7.924, perplexity: 2761.898, moe_lb_loss: 0.000
+I0616 17:35:16.384213 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.393733 138762116132864 metric_logger.py:196] completed step: 10, seconds: 0.010, TFLOP/s/device: 4.388, Tokens/s/device: 3158.934, total_weights: 32, loss: 7.330, lm_loss: 7.330, perplexity: 1525.593, moe_lb_loss: 0.000
+I0616 17:35:16.394489 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.403987 138762116132864 metric_logger.py:196] completed step: 11, seconds: 0.010, TFLOP/s/device: 4.362, Tokens/s/device: 3140.334, total_weights: 32, loss: 6.744, lm_loss: 6.744, perplexity: 849.360, moe_lb_loss: 0.000
+I0616 17:35:16.404776 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.414017 138762116132864 metric_logger.py:196] completed step: 12, seconds: 0.010, TFLOP/s/device: 4.337, Tokens/s/device: 3122.256, total_weights: 32, loss: 6.182, lm_loss: 6.182, perplexity: 483.826, moe_lb_loss: 0.000
+I0616 17:35:16.414769 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.424095 138762116132864 metric_logger.py:196] completed step: 13, seconds: 0.010, TFLOP/s/device: 4.348, Tokens/s/device: 3130.197, total_weights: 32, loss: 5.635, lm_loss: 5.635, perplexity: 280.158, moe_lb_loss: 0.000
+I0616 17:35:16.424839 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.434270 138762116132864 metric_logger.py:196] completed step: 14, seconds: 0.010, TFLOP/s/device: 4.431, Tokens/s/device: 3190.111, total_weights: 32, loss: 5.099, lm_loss: 5.099, perplexity: 163.890, moe_lb_loss: 0.000
+I0616 17:35:16.435013 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.444440 138762116132864 metric_logger.py:196] completed step: 15, seconds: 0.010, TFLOP/s/device: 4.402, Tokens/s/device: 3168.944, total_weights: 32, loss: 4.589, lm_loss: 4.589, perplexity: 98.398, moe_lb_loss: 0.000
+I0616 17:35:16.445199 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.454591 138762116132864 metric_logger.py:196] completed step: 16, seconds: 0.010, TFLOP/s/device: 4.378, Tokens/s/device: 3152.088, total_weights: 32, loss: 4.106, lm_loss: 4.106, perplexity: 60.694, moe_lb_loss: 0.000
+I0616 17:35:16.455344 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.464744 138762116132864 metric_logger.py:196] completed step: 17, seconds: 0.010, TFLOP/s/device: 4.367, Tokens/s/device: 3143.727, total_weights: 32, loss: 3.658, lm_loss: 3.658, perplexity: 38.769, moe_lb_loss: 0.000
+I0616 17:35:16.465494 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.474961 138762116132864 metric_logger.py:196] completed step: 18, seconds: 0.010, TFLOP/s/device: 4.385, Tokens/s/device: 3156.752, total_weights: 32, loss: 3.226, lm_loss: 3.226, perplexity: 25.169, moe_lb_loss: 0.000
+I0616 17:35:16.475719 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.485089 138762116132864 metric_logger.py:196] completed step: 19, seconds: 0.010, TFLOP/s/device: 4.371, Tokens/s/device: 3146.819, total_weights: 32, loss: 2.828, lm_loss: 2.828, perplexity: 16.911, moe_lb_loss: 0.000
+I0616 17:35:16.485846 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.495218 138762116132864 metric_logger.py:196] completed step: 20, seconds: 0.010, TFLOP/s/device: 4.366, Tokens/s/device: 3143.110, total_weights: 32, loss: 2.464, lm_loss: 2.464, perplexity: 11.750, moe_lb_loss: 0.000
+I0616 17:35:16.495973 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.505331 138762116132864 metric_logger.py:196] completed step: 21, seconds: 0.010, TFLOP/s/device: 4.334, Tokens/s/device: 3119.821, total_weights: 32, loss: 2.141, lm_loss: 2.141, perplexity: 8.504, moe_lb_loss: 0.000
+I0616 17:35:16.506074 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.515487 138762116132864 metric_logger.py:196] completed step: 22, seconds: 0.010, TFLOP/s/device: 4.443, Tokens/s/device: 3198.721, total_weights: 32, loss: 1.850, lm_loss: 1.850, perplexity: 6.358, moe_lb_loss: 0.000
+I0616 17:35:16.516249 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.525706 138762116132864 metric_logger.py:196] completed step: 23, seconds: 0.010, TFLOP/s/device: 4.378, Tokens/s/device: 3151.778, total_weights: 32, loss: 1.589, lm_loss: 1.589, perplexity: 4.896, moe_lb_loss: 0.000
+I0616 17:35:16.526491 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.535885 138762116132864 metric_logger.py:196] completed step: 24, seconds: 0.010, TFLOP/s/device: 4.391, Tokens/s/device: 3161.118, total_weights: 32, loss: 1.364, lm_loss: 1.364, perplexity: 3.910, moe_lb_loss: 0.000
+I0616 17:35:16.536652 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.546021 138762116132864 metric_logger.py:196] completed step: 25, seconds: 0.010, TFLOP/s/device: 4.334, Tokens/s/device: 3119.821, total_weights: 32, loss: 1.156, lm_loss: 1.156, perplexity: 3.178, moe_lb_loss: 0.000
+I0616 17:35:16.546806 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.556110 138762116132864 metric_logger.py:196] completed step: 26, seconds: 0.010, TFLOP/s/device: 4.382, Tokens/s/device: 3154.574, total_weights: 32, loss: 0.983, lm_loss: 0.983, perplexity: 2.673, moe_lb_loss: 0.000
+I0616 17:35:16.556886 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.567278 138762116132864 metric_logger.py:196] completed step: 27, seconds: 0.010, TFLOP/s/device: 4.368, Tokens/s/device: 3144.963, total_weights: 32, loss: 0.833, lm_loss: 0.833, perplexity: 2.301, moe_lb_loss: 0.000
+I0616 17:35:16.568093 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.576512 138762116132864 metric_logger.py:196] completed step: 28, seconds: 0.010, TFLOP/s/device: 4.405, Tokens/s/device: 3171.457, total_weights: 32, loss: 0.714, lm_loss: 0.714, perplexity: 2.043, moe_lb_loss: 0.000
+I0616 17:35:16.577245 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.586746 138762116132864 metric_logger.py:196] completed step: 29, seconds: 0.011, TFLOP/s/device: 3.964, Tokens/s/device: 2853.830, total_weights: 32, loss: 0.622, lm_loss: 0.622, perplexity: 1.863, moe_lb_loss: 0.000
+I0616 17:35:16.587506 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.596908 138762116132864 metric_logger.py:196] completed step: 30, seconds: 0.009, TFLOP/s/device: 4.889, Tokens/s/device: 3519.965, total_weights: 32, loss: 0.569, lm_loss: 0.569, perplexity: 1.766, moe_lb_loss: 0.000
+I0616 17:35:16.597676 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.607052 138762116132864 metric_logger.py:196] completed step: 31, seconds: 0.010, TFLOP/s/device: 4.331, Tokens/s/device: 3117.997, total_weights: 32, loss: 0.520, lm_loss: 0.520, perplexity: 1.682, moe_lb_loss: 0.000
+I0616 17:35:16.607826 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.617176 138762116132864 metric_logger.py:196] completed step: 32, seconds: 0.010, TFLOP/s/device: 4.376, Tokens/s/device: 3150.537, total_weights: 32, loss: 0.478, lm_loss: 0.478, perplexity: 1.612, moe_lb_loss: 0.000
+I0616 17:35:16.617930 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.627279 138762116132864 metric_logger.py:196] completed step: 33, seconds: 0.010, TFLOP/s/device: 4.341, Tokens/s/device: 3125.000, total_weights: 32, loss: 0.441, lm_loss: 0.441, perplexity: 1.555, moe_lb_loss: 0.000
+I0616 17:35:16.628028 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.637589 138762116132864 metric_logger.py:196] completed step: 34, seconds: 0.010, TFLOP/s/device: 4.440, Tokens/s/device: 3196.484, total_weights: 32, loss: 0.409, lm_loss: 0.409, perplexity: 1.506, moe_lb_loss: 0.000
+I0616 17:35:16.638689 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.647581 138762116132864 metric_logger.py:196] completed step: 35, seconds: 0.010, TFLOP/s/device: 4.393, Tokens/s/device: 3162.368, total_weights: 32, loss: 0.383, lm_loss: 0.383, perplexity: 1.466, moe_lb_loss: 0.000
+I0616 17:35:16.648322 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.657898 138762116132864 metric_logger.py:196] completed step: 36, seconds: 0.011, TFLOP/s/device: 4.143, Tokens/s/device: 2982.571, total_weights: 32, loss: 0.356, lm_loss: 0.356, perplexity: 1.428, moe_lb_loss: 0.000
+I0616 17:35:16.658663 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.668227 138762116132864 metric_logger.py:196] completed step: 37, seconds: 0.010, TFLOP/s/device: 4.675, Tokens/s/device: 3365.941, total_weights: 32, loss: 0.333, lm_loss: 0.333, perplexity: 1.395, moe_lb_loss: 0.000
+I0616 17:35:16.669000 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.678297 138762116132864 metric_logger.py:196] completed step: 38, seconds: 0.010, TFLOP/s/device: 4.259, Tokens/s/device: 3066.015, total_weights: 32, loss: 0.319, lm_loss: 0.319, perplexity: 1.375, moe_lb_loss: 0.000
+I0616 17:35:16.679041 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.688555 138762116132864 metric_logger.py:196] completed step: 39, seconds: 0.010, TFLOP/s/device: 4.291, Tokens/s/device: 3089.101, total_weights: 32, loss: 0.312, lm_loss: 0.312, perplexity: 1.366, moe_lb_loss: 0.000
+I0616 17:35:16.689307 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.698718 138762116132864 metric_logger.py:196] completed step: 40, seconds: 0.010, TFLOP/s/device: 4.459, Tokens/s/device: 3210.273, total_weights: 32, loss: 0.302, lm_loss: 0.302, perplexity: 1.353, moe_lb_loss: 0.000
+I0616 17:35:16.699480 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.708859 138762116132864 metric_logger.py:196] completed step: 41, seconds: 0.010, TFLOP/s/device: 4.324, Tokens/s/device: 3112.840, total_weights: 32, loss: 0.296, lm_loss: 0.296, perplexity: 1.344, moe_lb_loss: 0.000
+I0616 17:35:16.709640 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.719025 138762116132864 metric_logger.py:196] completed step: 42, seconds: 0.010, TFLOP/s/device: 4.377, Tokens/s/device: 3151.157, total_weights: 32, loss: 0.287, lm_loss: 0.287, perplexity: 1.333, moe_lb_loss: 0.000
+I0616 17:35:16.719785 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.729142 138762116132864 metric_logger.py:196] completed step: 43, seconds: 0.010, TFLOP/s/device: 4.352, Tokens/s/device: 3133.262, total_weights: 32, loss: 0.286, lm_loss: 0.286, perplexity: 1.331, moe_lb_loss: 0.000
+I0616 17:35:16.729908 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.739273 138762116132864 metric_logger.py:196] completed step: 44, seconds: 0.010, TFLOP/s/device: 4.411, Tokens/s/device: 3175.233, total_weights: 32, loss: 0.279, lm_loss: 0.279, perplexity: 1.322, moe_lb_loss: 0.000
+I0616 17:35:16.740060 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.749413 138762116132864 metric_logger.py:196] completed step: 45, seconds: 0.010, TFLOP/s/device: 4.381, Tokens/s/device: 3153.952, total_weights: 32, loss: 0.274, lm_loss: 0.274, perplexity: 1.315, moe_lb_loss: 0.000
+I0616 17:35:16.750141 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.759613 138762116132864 metric_logger.py:196] completed step: 46, seconds: 0.010, TFLOP/s/device: 4.381, Tokens/s/device: 3153.641, total_weights: 32, loss: 0.274, lm_loss: 0.274, perplexity: 1.315, moe_lb_loss: 0.000
+I0616 17:35:16.760358 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.769783 138762116132864 metric_logger.py:196] completed step: 47, seconds: 0.010, TFLOP/s/device: 4.412, Tokens/s/device: 3176.179, total_weights: 32, loss: 0.272, lm_loss: 0.272, perplexity: 1.313, moe_lb_loss: 0.000
+I0616 17:35:16.770553 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.779897 138762116132864 metric_logger.py:196] completed step: 48, seconds: 0.010, TFLOP/s/device: 4.375, Tokens/s/device: 3149.606, total_weights: 32, loss: 0.269, lm_loss: 0.269, perplexity: 1.309, moe_lb_loss: 0.000
+I0616 17:35:16.780678 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+I0616 17:35:16.790176 138762116132864 metric_logger.py:196] completed step: 49, seconds: 0.010, TFLOP/s/device: 4.328, Tokens/s/device: 3116.175, total_weights: 32, loss: 0.268, lm_loss: 0.268, perplexity: 1.307, moe_lb_loss: 0.000
+I0616 17:35:16.790943 138762116132864 metric_logger.py:281] To see full metrics 'tensorboard --logdir=/content/zenteiq_maxtext_outputs/moe_deepseek_under_1b_tpu/tensorboard/'
+[DECOUPLED NO-OP] gcs_storage: using stubs.
+[DECOUPLED NO-OP] mldiagnostics: using stub.
+[DECOUPLED NO-OP] mldiagnostics: using stub.
+[DECOUPLED NO-OP] mldiagnostics: using stub.
+[DECOUPLED NO-OP] workload_monitor: using stub.
+[DECOUPLED NO-OP] vertex_tensorboard: using stub.
+Per train step:
+ Total TFLOPs: 0.04 
+ split as 99.85% learnable weight flops and 0.15% attention flops
