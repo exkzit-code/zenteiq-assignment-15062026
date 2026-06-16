@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import math
 from pathlib import Path
 import re
 import statistics
@@ -17,15 +18,8 @@ DEFAULT_MATRIX = REPO_ROOT / "configs" / "runs.json"
 DEFAULT_LOG_DIR = REPO_ROOT / "results" / "raw_logs"
 DEFAULT_METRICS_DIR = REPO_ROOT / "results" / "metrics"
 
-STEP_RE = re.compile(
-    r"completed step:\s*(?P<step>\d+),\s*"
-    r"seconds:\s*(?P<seconds>[-+0-9.eE]+),\s*"
-    r"TFLOP/s/device:\s*(?P<tflops_per_device>[-+0-9.eE]+),\s*"
-    r"Tokens/s/device:\s*(?P<tokens_per_device>[-+0-9.eE]+),\s*"
-    r"total_weights:\s*(?P<total_weights>[-+0-9.eE]+),\s*"
-    r"loss:\s*(?P<loss>[-+0-9.eE]+)",
-    re.IGNORECASE,
-)
+STEP_RE = re.compile(r"completed step:\s*(?P<step>\d+),\s*(?P<metrics>.*)", re.IGNORECASE)
+METRIC_RE = re.compile(r"(?P<key>[^:,]+):\s*(?P<value>[^,]+)")
 PARAM_RE = re.compile(r"number parameters:\s*(?P<value>[-+0-9.eE]+)\s*(?P<unit>billion|million|trillion)?", re.I)
 MEMORY_RE = re.compile(
     r"Total memory size:\s*(?P<total_memory_gb>[-+0-9.eE]+)\s*GB,\s*"
@@ -38,6 +32,11 @@ MEMORY_RE = re.compile(
 CONFIG_RE = re.compile(r"Config param (?P<key>[^:]+):\s*(?P<value>.*)")
 SYSTEM_RE = re.compile(r"System Information:\s*(?P<key>[^:]+):\s*(?P<value>.*)")
 NUM_DEVICES_RE = re.compile(r"Num_devices:\s*(?P<num_devices>\d+),\s*shape\s*(?P<device_shape>.*)")
+STEP_METADATA_FIELDS = {"run_id", "backend", "architecture", "model_key", "display_name", "step"}
+METRIC_KEY_OVERRIDES = {
+    "TFLOP/s/device": "tflops_per_device",
+    "Tokens/s/device": "tokens_per_device",
+}
 
 
 def load_matrix(path: Path) -> dict[str, Any]:
@@ -61,6 +60,32 @@ def matrix_lookup(matrix: dict[str, Any]) -> dict[str, dict[str, str]]:
 
 def parse_number(value: str) -> float:
     return float(value)
+
+
+def parse_metric_value(value: str) -> Any:
+    text = value.strip()
+    try:
+        return float(text)
+    except ValueError:
+        return text
+
+
+def normalize_metric_key(key: str) -> str:
+    text = key.strip()
+    if text in METRIC_KEY_OVERRIDES:
+        return METRIC_KEY_OVERRIDES[text]
+    return re.sub(r"[^0-9a-zA-Z]+", "_", text).strip("_").lower()
+
+
+def parse_step_metrics(metrics: str) -> dict[str, Any]:
+    return {
+        normalize_metric_key(match.group("key")): parse_metric_value(match.group("value"))
+        for match in METRIC_RE.finditer(metrics)
+    }
+
+
+def is_number(value: Any) -> bool:
+    return isinstance(value, (int, float)) and not math.isnan(value)
 
 
 def parse_param_count(match: re.Match[str]) -> float:
@@ -105,12 +130,8 @@ def parse_log(path: Path, metadata: dict[str, str]) -> tuple[list[dict[str, Any]
                 "run_id": run_id,
                 **metadata,
                 "step": int(step_match.group("step")),
-                "seconds": parse_number(step_match.group("seconds")),
-                "tflops_per_device": parse_number(step_match.group("tflops_per_device")),
-                "tokens_per_device": parse_number(step_match.group("tokens_per_device")),
-                "total_weights": parse_number(step_match.group("total_weights")),
-                "loss": parse_number(step_match.group("loss")),
             }
+            row.update(parse_step_metrics(step_match.group("metrics")))
             steps.append(row)
             continue
 
@@ -151,24 +172,24 @@ def parse_log(path: Path, metadata: dict[str, str]) -> tuple[list[dict[str, Any]
         steps_sorted = sorted(steps, key=lambda row: row["step"])
         last = steps_sorted[-1]
         steady = steps_sorted[-10:] if len(steps_sorted) >= 10 else steps_sorted
+        step_metric_keys = sorted({key for row in steps_sorted for key in row} - STEP_METADATA_FIELDS)
         summary.update(
             {
                 "status": "complete" if len(steps_sorted) >= 50 else "partial",
                 "steps_completed": len(steps_sorted),
                 "first_step": steps_sorted[0]["step"],
                 "last_step": last["step"],
-                "last_seconds": last["seconds"],
-                "last_tflops_per_device": last["tflops_per_device"],
-                "last_tokens_per_device": last["tokens_per_device"],
-                "last_total_weights": last["total_weights"],
-                "last_loss": last["loss"],
-                "min_loss": min(row["loss"] for row in steps_sorted),
-                "max_loss": max(row["loss"] for row in steps_sorted),
-                "steady_avg_seconds": statistics.fmean(row["seconds"] for row in steady),
-                "steady_avg_tflops_per_device": statistics.fmean(row["tflops_per_device"] for row in steady),
-                "steady_avg_tokens_per_device": statistics.fmean(row["tokens_per_device"] for row in steady),
             }
         )
+        for key in step_metric_keys:
+            values = [row[key] for row in steps_sorted if is_number(row.get(key))]
+            steady_values = [row[key] for row in steady if is_number(row.get(key))]
+            summary[f"last_{key}"] = last.get(key, "")
+            if values:
+                summary[f"min_{key}"] = min(values)
+                summary[f"max_{key}"] = max(values)
+            if steady_values:
+                summary[f"steady_avg_{key}"] = statistics.fmean(steady_values)
     else:
         summary.update(
             {
@@ -209,6 +230,11 @@ def markdown_table(rows: list[dict[str, Any]], columns: list[str]) -> str:
     return "\n".join(lines) + "\n"
 
 
+def ordered_fields(rows: list[dict[str, Any]], preferred: list[str]) -> list[str]:
+    seen = {field for row in rows for field in row}
+    return preferred + sorted(seen - set(preferred))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--matrix", type=Path, default=DEFAULT_MATRIX)
@@ -236,7 +262,7 @@ def main() -> int:
         summaries.append(summary)
         configs[log_file.stem] = config
 
-    step_fields = [
+    preferred_step_fields = [
         "run_id",
         "backend",
         "architecture",
@@ -248,8 +274,11 @@ def main() -> int:
         "tokens_per_device",
         "total_weights",
         "loss",
+        "lm_loss",
+        "perplexity",
+        "moe_lb_loss",
     ]
-    summary_fields = [
+    preferred_summary_fields = [
         "run_id",
         "backend",
         "architecture",
@@ -264,6 +293,9 @@ def main() -> int:
         "last_tokens_per_device",
         "last_total_weights",
         "last_loss",
+        "last_lm_loss",
+        "last_perplexity",
+        "last_moe_lb_loss",
         "min_loss",
         "max_loss",
         "steady_avg_seconds",
@@ -282,26 +314,32 @@ def main() -> int:
         "host_temp_memory_gb",
         "log_file",
     ]
+    step_fields = ordered_fields(all_steps, preferred_step_fields)
+    summary_fields = ordered_fields(summaries, preferred_summary_fields)
 
     args.metrics_dir.mkdir(parents=True, exist_ok=True)
     write_csv(args.metrics_dir / "step_metrics.csv", all_steps, step_fields)
     write_csv(args.metrics_dir / "run_summary.csv", summaries, summary_fields)
     (args.metrics_dir / "config_params.json").write_text(json.dumps(configs, indent=2, sort_keys=True), encoding="utf-8")
+    markdown_columns = [
+        "run_id",
+        "backend",
+        "architecture",
+        "status",
+        "steps_completed",
+        "last_seconds",
+        "last_tflops_per_device",
+        "last_tokens_per_device",
+        "last_loss",
+        "last_lm_loss",
+        "last_perplexity",
+        "last_moe_lb_loss",
+        "total_parameters_reported",
+    ]
     (args.metrics_dir / "run_summary.md").write_text(
         markdown_table(
             summaries,
-            [
-                "run_id",
-                "backend",
-                "architecture",
-                "status",
-                "steps_completed",
-                "last_seconds",
-                "last_tflops_per_device",
-                "last_tokens_per_device",
-                "last_loss",
-                "total_parameters_reported",
-            ],
+            [column for column in markdown_columns if any(row.get(column, "") != "" for row in summaries)],
         ),
         encoding="utf-8",
     )
@@ -311,4 +349,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
