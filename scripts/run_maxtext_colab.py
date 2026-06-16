@@ -39,11 +39,12 @@ def cli_value(value: Any) -> str:
     return str(value)
 
 
-def build_command(matrix: dict[str, Any], run: dict[str, str], base_output_directory: str | None) -> list[str]:
+def build_command(matrix: dict[str, Any], run: dict[str, Any], base_output_directory: str | None) -> list[str]:
     model = matrix["models"][run["model_key"]]
     overrides: dict[str, Any] = {}
     overrides.update(matrix["common_overrides"])
     overrides.update(model["overrides"])
+    overrides.update(run.get("overrides", {}))
 
     if base_output_directory:
         overrides["base_output_directory"] = base_output_directory
@@ -57,7 +58,7 @@ def build_command(matrix: dict[str, Any], run: dict[str, str], base_output_direc
     return args
 
 
-def selected_runs(matrix: dict[str, Any], backend: str | None, run_id: str | None) -> list[dict[str, str]]:
+def selected_runs(matrix: dict[str, Any], backend: str | None, run_id: str | None) -> list[dict[str, Any]]:
     runs = matrix["runs"]
     if backend:
         runs = [run for run in runs if run["backend"] == backend]
@@ -73,7 +74,7 @@ def run_env(backend: str, platform_env: str) -> dict[str, str]:
     env.setdefault("DECOUPLE_GCLOUD", "TRUE")
 
     if platform_env == "auto":
-        env["JAX_PLATFORMS"] = backend
+        env["JAX_PLATFORMS"] = "cuda" if backend == "gpu" else backend
     elif platform_env != "none":
         env["JAX_PLATFORMS"] = platform_env
 
@@ -132,7 +133,7 @@ def main() -> int:
     parser.add_argument(
         "--platform-env",
         default="auto",
-        help="JAX_PLATFORMS behavior: auto, none, or an explicit value such as cpu/gpu/tpu.",
+        help="JAX_PLATFORMS behavior: auto, none, or an explicit value such as cpu/cuda/tpu.",
     )
     parser.add_argument("--dry-run", action="store_true", help="Print commands without running MaxText.")
     parser.add_argument("--continue-on-error", action="store_true", help="Continue after a failed run.")

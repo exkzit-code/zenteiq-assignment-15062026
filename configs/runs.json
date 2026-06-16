@@ -85,7 +85,11 @@
     {
       "run_id": "dense_qwen_0_6b_gpu",
       "backend": "gpu",
-      "model_key": "qwen3_0_6b"
+      "model_key": "qwen3_0_6b",
+      "overrides": {
+        "dtype": "float16",
+        "weight_dtype": "float16"
+      }
     },
     {
       "run_id": "dense_qwen_0_6b_tpu",
@@ -100,7 +104,11 @@
     {
       "run_id": "dense_qwen_scaled_1b_gpu",
       "backend": "gpu",
-      "model_key": "qwen3_scaled_1b"
+      "model_key": "qwen3_scaled_1b",
+      "overrides": {
+        "dtype": "float16",
+        "weight_dtype": "float16"
+      }
     },
     {
       "run_id": "dense_qwen_scaled_1b_tpu",
@@ -115,7 +123,11 @@
     {
       "run_id": "moe_deepseek_under_1b_gpu",
       "backend": "gpu",
-      "model_key": "deepseek_moe_under_1b"
+      "model_key": "deepseek_moe_under_1b",
+      "overrides": {
+        "dtype": "float16",
+        "weight_dtype": "float16"
+      }
     },
     {
       "run_id": "moe_deepseek_under_1b_tpu",
