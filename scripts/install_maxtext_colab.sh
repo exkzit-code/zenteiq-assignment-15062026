@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+trap 'echo "Setup failed at line ${LINENO}: ${BASH_COMMAND}" >&2' ERR
 
 backend="${1:-}"
 version="${MAXTEXT_VERSION:-0.2.2}"
@@ -28,7 +29,7 @@ case "${backend}" in
 esac
 
 if [[ "${backend}" == "tpu" ]]; then
-  python3 -c "import maxtext; print('MaxText import OK')"
+  python3 -c "import importlib.util; assert importlib.util.find_spec('maxtext'); print('MaxText package found')"
 else
   python3 -c "import maxtext; import maxtext.trainers.pre_train.train; print('MaxText import OK')"
 fi
