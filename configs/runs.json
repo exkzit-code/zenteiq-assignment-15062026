@@ -4,7 +4,7 @@
     "steps": 50,
     "dataset_type": "synthetic",
     "per_device_batch_size": 1,
-    "max_target_length": 128,
+    "max_target_length": 64,
     "log_period": 1,
     "enable_checkpointing": false,
     "async_checkpointing": false,
